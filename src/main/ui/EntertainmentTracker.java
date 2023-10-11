@@ -1,7 +1,9 @@
 package ui;
 
-import model.*;
+import model.Archive;
+import model.Media;
 
+import java.util.List;
 import java.util.Scanner;
 
 // represents the Tracker application
@@ -38,7 +40,12 @@ public class EntertainmentTracker {
 
     // EFFECTS: displays the current display type of entries
     private void displayEntries() {
-        System.out.println(archive.getDisplayEntries());
+        List<Media> displayEntry = archive.getDisplayEntries();
+        StringBuilder stb = new StringBuilder();
+        for (Media m : displayEntry) {
+            stb.append(m).append("\n");
+        }
+        System.out.println(stb);
     }
 
     // EFFECTS: displays possible actions to user
@@ -58,7 +65,7 @@ public class EntertainmentTracker {
         } else if (action.equals("s")) {
             new ui.SortManager(archive);
         } else if (action.equals("m")) {
-            new ui.SortManager(archive);
+            new ui.EntriesManager(archive);
         } else {
             System.out.println("Invalid Action... Try Again");
         }

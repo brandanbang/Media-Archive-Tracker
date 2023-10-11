@@ -74,8 +74,8 @@ public class Media {
         return Collections.unmodifiableSet(tags);
     }
 
-    public float getRating() {
-        return rating;
+    public String getRating() {
+        return formatRating();
     }
 
     public int getProgress() {
@@ -92,5 +92,35 @@ public class Media {
 
     public Archive getArchive() {
         return archive;
+    }
+
+    // EFFECT: converts and formats details of info to String
+    @Override
+    public String toString() {
+        return "\nname: " + this.title
+                + "\ntype: " + this.type
+                + "\ntags: " + tagsToString()
+                + "\nrating: " + formatRating()
+                + "\nprogress: " + this.progress
+                + "\nend: " + this.end
+                + "\nprogress percent: " + checkProgress()
+                + "\nnotes: " + this.notes;
+    }
+
+    // EFFECTS: formats tags to a comma separate list without []
+    private String tagsToString() {
+        StringBuilder stb = new StringBuilder();
+        for (String tag : this.tags) {
+            stb.append(tag).append(", ");
+        }
+        return stb.toString();
+    }
+
+    private String formatRating() {
+        if (rating == -1) {
+            return "no rating";
+        } else {
+            return String.valueOf(rating);
+        }
     }
 }

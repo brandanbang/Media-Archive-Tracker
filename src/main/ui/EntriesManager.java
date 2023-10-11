@@ -56,14 +56,13 @@ public class EntriesManager {
             addEntry();
             System.out.println("added");
         } else if (action.equals("d")) {
-            //stub
-            System.out.println("deleted");
+            delEntry();
         } else {
             System.out.println("Invalid Action... try again");
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, archive
     // EFFECTS: manages the steps for making a new entry
     private void addEntry() {
         String title = getTitle();
@@ -72,7 +71,18 @@ public class EntriesManager {
         archive.addEntry(new Media(title, end, archive, type));
     }
 
-    // EFFECTS: gets the title for the new entry
+    // MODIFIES: this, archive
+    // EFFECTS: manages the steps for making a new entry
+    private void delEntry() {
+        String title = getTitle();
+        if (archive.delEntry(title)) {
+            System.out.print("successfully deleted");
+        } else {
+            System.out.print("entry with " + title + " does not exist");
+        }
+    }
+
+    // EFFECTS: gets the title for entry
     private String getTitle() {
         System.out.println("\nTitle: ");
         return input.next().toLowerCase();

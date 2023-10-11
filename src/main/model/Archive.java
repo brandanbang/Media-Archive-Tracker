@@ -99,6 +99,21 @@ public class Archive {
     // EFFECTS: adds given entry to archive
     public void addEntry(Media entry) {
         this.entries.add(entry);
+        this.displayEntries.add(entry);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes entry from archive based off given name and returns true
+    //          if not exists, return false
+    public boolean delEntry(String title) {
+        for (Media m : entries) {
+            if (m.getTitle().equals(title)) {
+                entries.remove(m);
+                displayEntries.remove(m);
+                return true;
+            }
+        }
+        return false;
     }
 
     public Set<String> getTags() {
@@ -111,11 +126,5 @@ public class Archive {
 
     public List<Media> getDisplayEntries() {
         return this.displayEntries;
-    }
-
-    //todo
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }
