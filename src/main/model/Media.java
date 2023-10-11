@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Set;
 
 // abstract class for various types of media
-public abstract class Media {
+public class Media {
     protected String title;
     protected Set<String> tags;
     protected float rating;
@@ -21,8 +21,10 @@ public abstract class Media {
         //stub
     }
 
-    // EFFECTS: returns progress of this media type
-    public abstract float checkProgress();
+    // EFFECTS: returns progress percentage of this media type
+    public float checkProgress() {
+        return 0; //stub
+    }
 
     // REQUIRES: 0 < progress < end marker
     public void updateProgress(int progress) {

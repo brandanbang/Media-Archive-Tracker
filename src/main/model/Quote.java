@@ -16,4 +16,10 @@ public class Quote {
         //stub
     }
 
+    @Override
+    public String toString() {
+        return "\"" + quote + "\"\n"
+                + name + "\n"
+                + source;
+    }
 }

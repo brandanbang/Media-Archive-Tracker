@@ -16,20 +16,48 @@ public class Archive {
     }
 
     // REQUIRES: entries must have at least one entry
+    // EFFECTS: returns the all media that is a given tag
+    public Set<Media> whitelistTag(String tag) {
+        return null; //stub
+    }
+
+    // REQUIRES: entries must have at least one entry
+    // EFFECTS: returns the all media that is NOT a given tag
+    public Set<Media> blacklistTag(String tag) {
+        return null; //stub
+    }
+
+    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media entries matching the filter
-    public List<Media> filter(String type, String specification) {
+    private Set<Media> filter(FilterListType listType, String tag) {
         return null; //stub
     }
 
     // REQUIRES: entries must have at least one entry
-    // EFFECTS: returns the list of media sorted by progress percentage
-    public List<Media> sortProgress(float progressPercent) {
+    // EFFECTS: returns the list of media sorted by progress percentage ascended
+    public List<Media> sortProgressAscending() {
         return null; //stub
     }
 
     // REQUIRES: entries must have at least one entry
-    // EFFECTS: returns the list of media sorted by rating
-    public List<Media> sortRating(float rating) {
+    // EFFECTS: returns the list of media sorted by progress percentage descended
+    public List<Media> sortProgressDescending() {
+        return null; //stub
+    }
+
+    // REQUIRES: entries must have at least one entry
+    // EFFECTS: returns the list of media sorted by rating ascended
+    public List<Media> sortRatingAscending() {
+        return null; //stub
+    }
+
+    // REQUIRES: entries must have at least one entry
+    // EFFECTS: returns the list of media sorted by rating descended
+    public List<Media> sortRatingDescending() {
+        return null; //stub
+    }
+
+    private List<Media> sort(SortType type) {
         return null; //stub
     }
 
