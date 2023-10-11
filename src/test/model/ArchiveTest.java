@@ -3,9 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Set;
-
 import static model.MediaType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -74,48 +71,48 @@ class ArchiveTest {
 
     @Test
     void testWhitelistTag() {
-        Set<Media> filteredSet = a1.whitelistTag("thriller");
-        assertTrue(filteredSet.contains(m0));
-        assertTrue(filteredSet.contains(m1));
-        assertEquals(2, filteredSet.size());
+        a1.whitelistTag("thriller");
+        assertTrue(a1.getDisplayEntries().contains(m0));
+        assertTrue(a1.getDisplayEntries().contains(m1));
+        assertEquals(2, a1.getDisplayEntries().size());
     }
 
     @Test
     void testBlacklistTag() {
-        Set<Media> filteredSet = a1.blacklistTag("thriller");
-        assertTrue(filteredSet.contains(m2));
-        assertEquals(1, filteredSet.size());
+        a1.blacklistTag("thriller");
+        assertTrue(a1.getDisplayEntries().contains(m2));
+        assertEquals(1, a1.getDisplayEntries().size());
     }
 
     @Test
     void testSortProgressAsc() {
-        List<Media> sortedList = a1.sortProgressAscending();
-        assertEquals(m2, sortedList.get(0));
-        assertEquals(m0, sortedList.get(1));
-        assertEquals(m1, sortedList.get(2));
+        a1.sortProgressAscending();
+        assertEquals(m2, a1.getDisplayEntries().get(0));
+        assertEquals(m0, a1.getDisplayEntries().get(1));
+        assertEquals(m1, a1.getDisplayEntries().get(2));
     }
 
     @Test
     void testSortProgressDesc() {
-        List<Media> sortedList = a1.sortProgressDescending();
-        assertEquals(m1, sortedList.get(0));
-        assertEquals(m0, sortedList.get(1));
-        assertEquals(m2, sortedList.get(2));
+        a1.sortProgressDescending();
+        assertEquals(m1, a1.getDisplayEntries().get(0));
+        assertEquals(m0, a1.getDisplayEntries().get(1));
+        assertEquals(m2, a1.getDisplayEntries().get(2));
     }
 
     @Test
     void testSortRatingAsc() {
-        List<Media> sortedList = a1.sortRatingAscending();
-        assertEquals(m0, sortedList.get(0));
-        assertEquals(m2, sortedList.get(1));
-        assertEquals(m1, sortedList.get(2));
+        a1.sortRatingAscending();
+        assertEquals(m0, a1.getDisplayEntries().get(0));
+        assertEquals(m2, a1.getDisplayEntries().get(1));
+        assertEquals(m1, a1.getDisplayEntries().get(2));
     }
 
     @Test
     void testSortRatingDesc() {
-        List<Media> sortedList = a1.sortRatingDescending();
-        assertEquals(m1, sortedList.get(0));
-        assertEquals(m2, sortedList.get(1));
-        assertEquals(m0, sortedList.get(2));
+        a1.sortRatingDescending();
+        assertEquals(m1, a1.getDisplayEntries().get(0));
+        assertEquals(m2, a1.getDisplayEntries().get(1));
+        assertEquals(m0, a1.getDisplayEntries().get(2));
     }
 }
