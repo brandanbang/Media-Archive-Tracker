@@ -5,6 +5,8 @@ import model.Archive;
 import model.Media;
 import model.MediaType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -46,6 +48,7 @@ public class EntriesManager {
         System.out.println("\nActions:");
         System.out.println("\ta | add entry");
         System.out.println("\td | delete entry");
+        System.out.println("\tt | tag entry");
         System.out.println("\tc | cancel");
     }
 
@@ -57,8 +60,44 @@ public class EntriesManager {
             System.out.println("added");
         } else if (action.equals("d")) {
             delEntry();
+        } else if (action.equals("t")) {
+            tagEntry();
+            System.out.println("added tag");
         } else {
             System.out.println("Invalid Action... try again");
+        }
+    }
+
+    // MODIFIES: this, archive
+    // EFFECT: manages and adds tags to entries
+    private void tagEntry() {
+        archive.getTags();
+        System.out.printf("Enter Tag");
+        String tag = input.next().toLowerCase();
+        String title;
+        List<String> entryNames = new ArrayList<>();
+
+        while (true) {
+            try {
+                System.out.println("\nSelect entry: ");
+                for (Media m : archive.getDisplayEntries()) {
+                    System.out.printf(m.getTitle() + "\n");
+                    entryNames.add(m.getTitle());
+                }
+                title = input.next().toLowerCase();
+
+                if (!entryNames.contains(title)) {
+                    throw new InvalidSelection();
+                }
+                break;
+            } catch (NumberFormatException | InvalidSelection e) {
+                System.out.println("Invalid input... the entered title does not exist... try again");
+            }
+        }
+        for (Media m : archive.getDisplayEntries()) {
+            if (m.getTitle().equals(title)) {
+                m.addTag(tag);
+            }
         }
     }
 
