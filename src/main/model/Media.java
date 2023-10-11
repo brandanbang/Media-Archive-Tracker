@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 // abstract class for various types of media
@@ -18,24 +19,31 @@ public class Media {
     // EFFECTS: constructs and generates basic media components with given info
     //          with no tags, no notes, rating = -1, and no current progress
     public Media(String title, int end, Archive archive, MediaType type) {
-        //stub
+        this.title = title;
+        this.tags = new HashSet<>();
+        this.rating = -1;
+        this.progress = 0;
+        this.end = end;
+        this.notes = "";
+        this.archive = archive;
+        this.type = type;
     }
 
     // EFFECTS: returns progress percentage of this media type
-    public float checkProgress() {
-        return 0; //stub
+    public double checkProgress() {
+        return Math.round((float) progress / end * 100);
     }
 
     // REQUIRES: 0 < progress < end marker
     public void updateProgress(int progress) {
-        //stub
+        this.progress = progress;
     }
 
     // REQUIRES: 0 < given rating < 10, given rating must be at most 1 decimal digit
     // MODIFIES: this
     // EFFECTS: updates the rating for this media
     public void updateRating(float rating) {
-        //stub
+        this.rating = rating;
     }
 
     // REQUIRES: tag not already assigned
@@ -45,14 +53,17 @@ public class Media {
     //          if tag is not being used,
     //              add tag to this and to archive list
     public void addTag(String tag) {
-        //stub
+        if (!archive.getTags().contains(tag)) {
+            archive.addTag(tag);
+        }
+        this.tags.add(tag);
     }
 
     // REQUIRES: tag already assigned
     // MODIFIES: this
     // EFFECTS: removes given tag from this
     public void removeTag(String tag) {
-        //stub
+        this.tags.remove(tag);
     }
 
     public String getTitle() {

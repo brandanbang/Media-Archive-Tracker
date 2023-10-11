@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Set;
 
 import static model.MediaType.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ArchiveTest {
 
     Archive a0;
+    Archive a1;
 
     Media m0;
     Media m1;
@@ -21,12 +21,21 @@ class ArchiveTest {
     @BeforeEach
     void runBefore() {
         a0 = new Archive();
+        a1 = new Archive();
+        initializeMedia();
+        initializeA1();
+    }
+
+    private void initializeA1() {
+        a1.addEntry(m0);
+        a1.addEntry(m1);
+        a1.addEntry(m2);
     }
 
     private void initializeMedia() {
-        m0 = new Media("Book 0", 10, a0, BOOK);
-        m1 = new Media("Movie 0", 10, a0, MOVIE);
-        m2 = new Media("Series 0", 10, a0, SERIES);
+        m0 = new Media("Book 0", 10, a1, BOOK);
+        m1 = new Media("Movie 0", 10, a1, MOVIE);
+        m2 = new Media("Series 0", 10, a1, SERIES);
 
         m0.addTag("thriller");
         m1.addTag("thriller");
@@ -47,8 +56,25 @@ class ArchiveTest {
     }
 
     @Test
+    void testAddEntry() {
+        assertFalse(a0.getEntries().contains(m0));
+        a0.addEntry(m0);
+        assertTrue(a0.getEntries().contains(m0));
+    }
+
+    @Test
+    void testAddEntryMulti() {
+        assertFalse(a0.getEntries().contains(m0));
+        assertFalse(a0.getEntries().contains(m1));
+        a0.addEntry(m0);
+        a0.addEntry(m1);
+        assertTrue(a0.getEntries().contains(m0));
+        assertTrue(a0.getEntries().contains(m1));
+    }
+
+    @Test
     void testWhitelistTag() {
-        Set<Media> filteredSet = a0.whitelistTag("thriller");
+        Set<Media> filteredSet = a1.whitelistTag("thriller");
         assertTrue(filteredSet.contains(m0));
         assertTrue(filteredSet.contains(m1));
         assertEquals(2, filteredSet.size());
@@ -56,14 +82,14 @@ class ArchiveTest {
 
     @Test
     void testBlacklistTag() {
-        Set<Media> filteredSet = a0.blacklistTag("thriller");
+        Set<Media> filteredSet = a1.blacklistTag("thriller");
         assertTrue(filteredSet.contains(m2));
         assertEquals(1, filteredSet.size());
     }
 
     @Test
     void testSortProgressAsc() {
-        List<Media> sortedList = a0.sortProgressAscending();
+        List<Media> sortedList = a1.sortProgressAscending();
         assertEquals(m2, sortedList.get(0));
         assertEquals(m0, sortedList.get(1));
         assertEquals(m1, sortedList.get(2));
@@ -71,7 +97,7 @@ class ArchiveTest {
 
     @Test
     void testSortProgressDesc() {
-        List<Media> sortedList = a0.sortProgressAscending();
+        List<Media> sortedList = a1.sortProgressDescending();
         assertEquals(m1, sortedList.get(0));
         assertEquals(m0, sortedList.get(1));
         assertEquals(m2, sortedList.get(2));
@@ -79,7 +105,7 @@ class ArchiveTest {
 
     @Test
     void testSortRatingAsc() {
-        List<Media> sortedList = a0.sortRatingAscending();
+        List<Media> sortedList = a1.sortRatingAscending();
         assertEquals(m0, sortedList.get(0));
         assertEquals(m2, sortedList.get(1));
         assertEquals(m1, sortedList.get(2));
@@ -87,7 +113,7 @@ class ArchiveTest {
 
     @Test
     void testSortRatingDesc() {
-        List<Media> sortedList = a0.sortRatingAscending();
+        List<Media> sortedList = a1.sortRatingDescending();
         assertEquals(m1, sortedList.get(0));
         assertEquals(m2, sortedList.get(1));
         assertEquals(m0, sortedList.get(2));

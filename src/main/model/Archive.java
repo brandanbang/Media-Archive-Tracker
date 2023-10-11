@@ -1,8 +1,9 @@
 package model;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static model.SortType.PROGRESS;
+import static model.SortType.RATING;
 
 // represents an overall archive
 public class Archive {
@@ -12,60 +13,90 @@ public class Archive {
 
     // EFFECTS: constructs an archive with no used tags and empty entries of media
     public Archive() {
-        //stub
+        this.entries = new HashSet<>();
+        this.tags = new HashSet<>();
     }
 
     // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the all media that is a given tag
     public Set<Media> whitelistTag(String tag) {
-        return null; //stub
+        return filter(true, tag);
     }
 
     // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the all media that is NOT a given tag
     public Set<Media> blacklistTag(String tag) {
-        return null; //stub
+        return filter(false, tag);
     }
 
     // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media entries matching the filter
-    private Set<Media> filter(FilterListType listType, String tag) {
-        return null; //stub
+    private Set<Media> filter(boolean whitelist, String tag) {
+        Set<Media> filteredSet = new HashSet<>();
+        if (whitelist) {
+            for (Media m : entries) {
+                if (m.getTags().contains(tag)) {
+                    filteredSet.add(m);
+                }
+            }
+        } else {
+            for (Media m : entries) {
+                if (!m.getTags().contains(tag)) {
+                    filteredSet.add(m);
+                }
+            }
+        }
+        return filteredSet;
     }
 
     // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by progress percentage ascended
     public List<Media> sortProgressAscending() {
-        return null; //stub
+        return sort(true, PROGRESS);
     }
 
     // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by progress percentage descended
     public List<Media> sortProgressDescending() {
-        return null; //stub
+        return sort(false, PROGRESS);
     }
 
     // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by rating ascended
     public List<Media> sortRatingAscending() {
-        return null; //stub
+        return sort(true, RATING);
     }
 
     // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by rating descended
     public List<Media> sortRatingDescending() {
-        return null; //stub
+        return sort(false, RATING);
     }
 
-    private List<Media> sort(SortType type) {
-        return null; //stub
+    private List<Media> sort(boolean ascending, SortType type) {
+        List<Media> filteredSet = new ArrayList<>(entries);
+        if (type == PROGRESS) {
+            filteredSet.sort(Comparator.comparing(Media::checkProgress));
+        } else if (type == RATING) {
+            filteredSet.sort(Comparator.comparing(Media::getRating));
+        }
+        if (!ascending) {
+            Collections.reverse(filteredSet);
+        }
+        return filteredSet;
     }
 
     // REQUIRES: tag not already in list of tags
     // MODIFIES: this
     // EFFECTS: adds given tag to list of tags
     public void addTag(String tag) {
-        //stub
+        this.tags.add(tag);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds given entry to archive
+    public void addEntry(Media entry) {
+        this.entries.add(entry);
     }
 
     public Set<String> getTags() {

@@ -40,17 +40,17 @@ public class MediaTest {
     @Test
     void testCheckProgress() {
         m0.updateProgress(3);
-        assertEquals(0.3f, m0.checkProgress());
+        assertEquals(30, m0.checkProgress());
     }
 
     @Test
     void testAddTagAlreadyExists() {
         testArchive.addTag("horror");
         assertTrue(testArchive.getTags().contains("horror"));
-        assertEquals(1, testArchive.getTags().size());
+        assertEquals(4, testArchive.getTags().size());
         m0.addTag("horror");
         assertTrue(m0.getTags().contains("horror"));
-        assertEquals(1, testArchive.getTags().size());
+        assertEquals(4, testArchive.getTags().size());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class MediaTest {
         assertTrue(m0.getTags().contains("horror"));
         assertTrue(testArchive.getTags().contains("horror"));
         assertEquals(1, m0.getTags().size());
-        assertEquals(1, testArchive.getTags().size());
+        assertEquals(4, testArchive.getTags().size());
     }
 
     @Test
@@ -69,12 +69,12 @@ public class MediaTest {
         testArchive.addTag("action");
         assertTrue(testArchive.getTags().contains("horror"));
         assertTrue(testArchive.getTags().contains("action"));
-        assertEquals(2, testArchive.getTags().size());
+        assertEquals(5, testArchive.getTags().size());
         m0.addTag("horror");
         m0.addTag("action");
         assertTrue(m0.getTags().contains("horror"));
         assertTrue(m0.getTags().contains("action"));
-        assertEquals(2, testArchive.getTags().size());
+        assertEquals(5, testArchive.getTags().size());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class MediaTest {
         assertTrue(testArchive.getTags().contains("horror"));
         assertTrue(testArchive.getTags().contains("action"));
         assertEquals(2, m0.getTags().size());
-        assertEquals(2, testArchive.getTags().size());
+        assertEquals(5, testArchive.getTags().size());
     }
 
     @Test

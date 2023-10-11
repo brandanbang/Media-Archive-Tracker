@@ -8,12 +8,16 @@ public class Quote {
 
     // EFFECT: constructs a completed quote with the quoted line and character that said it
     public Quote(String quote, String name) {
-        //stub
+        this.quote = quote;
+        this.name = name;
+        this.source = "";
     }
 
     // EFFECT: constructs a completed quote with the quoted line, character that said it and when it was said
     public Quote(String quote, String name, String source) {
-        //stub
+        this.quote = quote;
+        this.name = name;
+        this.source = source;
     }
 
     @Override

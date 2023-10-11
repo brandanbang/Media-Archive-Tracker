@@ -1,6 +1,6 @@
 package model;
 
 public enum SortType {
-    ASCENDING,
-    DESCENDING;
+    RATING,
+    PROGRESS
 }

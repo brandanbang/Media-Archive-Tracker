@@ -18,17 +18,16 @@ public class QuoteTest {
 
     @Test
     void testFirstConstructor() {
-        assertEquals("\"it is what it is\""
-                + "Some person" + "\n"
-                + "",
+        assertEquals("\"it is what it is\"\n"
+                + "Some person" + "\n",
                 q0.toString());
     }
 
     @Test
     void testSecondConstructor() {
-        assertEquals("\"Summoners War is an E-Sport\""
+        assertEquals("\"Summoners War is an E-Sport\"\n"
                         + "Com2Us" + "\n"
                         + "Every SWC",
-                q0.toString());
+                q1.toString());
     }
 }
