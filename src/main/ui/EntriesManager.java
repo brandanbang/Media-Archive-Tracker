@@ -50,6 +50,7 @@ public class EntriesManager {
         System.out.println("\td | delete entry");
         System.out.println("\tt | tag entry");
         System.out.println("\tr | change rating");
+        System.out.println("\tp | change progress");
         System.out.println("\tc | cancel");
     }
 
@@ -66,11 +67,71 @@ public class EntriesManager {
             System.out.println("added tag");
         } else if (action.equals("r")) {
             changeRatingManager();
+        } else if (action.equals("p")) {
+            changeProgressManager();
         } else {
             System.out.println("Invalid Action... try again");
         }
     }
 
+    // EFFECT: manages updating progress of selected a media
+    private void changeProgressManager() {
+        String title;
+        List<String> entryNames = new ArrayList<>();
+
+        while (true) {
+            try {
+                System.out.println("\nSelect entry: ");
+                for (Media m : archive.getDisplayEntries()) {
+                    System.out.printf(m.getTitle() + "\n");
+                    entryNames.add(m.getTitle());
+                }
+                title = input.next().toLowerCase();
+
+                if (!entryNames.contains(title)) {
+                    throw new InvalidSelection();
+                }
+
+                Media matchMedia = matchTitle(title);
+                int newProgress = getNewProgress(matchMedia.getEnd());
+                matchMedia.updateProgress(newProgress);
+                break;
+            } catch (NumberFormatException | InvalidSelection e) {
+                System.out.println("Invalid input... the entered title does not exist... try again");
+            }
+        }
+    }
+
+    // EFFECT: returns int representing the new progress
+    private int getNewProgress(int end) {
+        while (true) {
+            try {
+                System.out.println("\nUpdated Progress: ");
+                int choice = Integer.parseInt(input.next());
+                if ((choice <= 0) || (choice > end)) {
+                    throw new InvalidSelection();
+                }
+                return choice;
+            } catch (NumberFormatException | InvalidSelection e) {
+                System.out.println("Invalid input... try again");
+            }
+        }
+    }
+
+    // EFFECTS: changes progress to media with given title
+    private Media matchTitle(String title) {
+        Media match = null;
+        for (Media m : archive.getDisplayEntries()) {
+            if (m.getTitle().equals(title)) {
+                match = m;
+            }
+        }
+        return match;
+    }
+
+
+
+    // EFFECTS: manages the process to change rating of media
     private void changeRatingManager() {
         float newRating = getNewRating();
 
@@ -125,8 +186,8 @@ public class EntriesManager {
     // MODIFIES: this, archive
     // EFFECT: manages and adds tags to entries
     private void tagEntry() {
-        archive.getTags();
-        System.out.print("Enter Tag");
+        System.out.print(archive.getTags() + "\n");
+        System.out.print("Enter Tag\n");
         String tag = input.next().toLowerCase();
         String title;
         List<String> entryNames = new ArrayList<>();
@@ -135,7 +196,7 @@ public class EntriesManager {
             try {
                 System.out.println("\nSelect entry: ");
                 for (Media m : archive.getDisplayEntries()) {
-                    System.out.printf(m.getTitle() + "\n");
+                    System.out.print(m.getTitle() + ", ");
                     entryNames.add(m.getTitle());
                 }
                 title = input.next().toLowerCase();
