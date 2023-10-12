@@ -89,11 +89,16 @@ public class EntriesManager {
                 if (!entryNames.contains(title)) {
                     throw new InvalidSelection();
                 }
+                addTag(tag, title);
                 break;
             } catch (NumberFormatException | InvalidSelection e) {
                 System.out.println("Invalid input... the entered title does not exist... try again");
             }
         }
+
+    }
+
+    private void addTag(String tag, String title) {
         for (Media m : archive.getDisplayEntries()) {
             if (m.getTitle().equals(title)) {
                 m.addTag(tag);
