@@ -72,7 +72,7 @@ public class EntriesManager {
     // EFFECT: manages and adds tags to entries
     private void tagEntry() {
         archive.getTags();
-        System.out.printf("Enter Tag");
+        System.out.print("Enter Tag");
         String tag = input.next().toLowerCase();
         String title;
         List<String> entryNames = new ArrayList<>();
@@ -95,7 +95,6 @@ public class EntriesManager {
                 System.out.println("Invalid input... the entered title does not exist... try again");
             }
         }
-
     }
 
     private void addTag(String tag, String title) {

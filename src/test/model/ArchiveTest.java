@@ -115,4 +115,25 @@ class ArchiveTest {
         assertEquals(m2, a1.getDisplayEntries().get(1));
         assertEquals(m0, a1.getDisplayEntries().get(2));
     }
+
+    @Test
+    void testDelEntry() {
+        assertTrue(a1.getEntries().contains(m0));
+        assertEquals(3, a1.getEntries().size());
+        a1.delEntry("Book 0");
+        assertFalse(a1.getEntries().contains(m0));
+        assertEquals(2, a1.getEntries().size());
+    }
+
+    @Test
+    void testDelEntryMulti() {
+        assertTrue(a1.getEntries().contains(m0));
+        assertTrue(a1.getEntries().contains(m1));
+        assertEquals(3, a1.getEntries().size());
+        a1.delEntry("Book 0");
+        a1.delEntry("Movie 0");
+        assertFalse(a1.getEntries().contains(m0));
+        assertFalse(a1.getEntries().contains(m1));
+        assertEquals(1, a1.getEntries().size());
+    }
 }
