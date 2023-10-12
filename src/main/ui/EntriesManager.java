@@ -49,6 +49,7 @@ public class EntriesManager {
         System.out.println("\ta | add entry");
         System.out.println("\td | delete entry");
         System.out.println("\tt | tag entry");
+        System.out.println("\tr | change rating");
         System.out.println("\tc | cancel");
     }
 
@@ -63,8 +64,61 @@ public class EntriesManager {
         } else if (action.equals("t")) {
             tagEntry();
             System.out.println("added tag");
+        } else if (action.equals("r")) {
+            changeRatingManager();
         } else {
             System.out.println("Invalid Action... try again");
+        }
+    }
+
+    private void changeRatingManager() {
+        float newRating = getNewRating();
+
+        String title;
+        List<String> entryNames = new ArrayList<>();
+
+        while (true) {
+            try {
+                System.out.println("\nSelect entry: ");
+                for (Media m : archive.getDisplayEntries()) {
+                    System.out.printf(m.getTitle() + "\n");
+                    entryNames.add(m.getTitle());
+                }
+                title = input.next().toLowerCase();
+
+                if (!entryNames.contains(title)) {
+                    throw new InvalidSelection();
+                }
+                changeRating(newRating, title);
+                break;
+            } catch (NumberFormatException | InvalidSelection e) {
+                System.out.println("Invalid input... the entered title does not exist... try again");
+            }
+        }
+    }
+
+    // EFFECTS: adds given tag to media with given title
+    private void changeRating(float rating, String title) {
+        for (Media m : archive.getDisplayEntries()) {
+            if (m.getTitle().equals(title)) {
+                m.updateRating(rating);
+            }
+        }
+    }
+
+    // EFFECT: returns float representing the new rating
+    private float getNewRating() {
+        while (true) {
+            try {
+                System.out.println("\nNew Rating (0 - 10): ");
+                float choice = Float.parseFloat(input.next());
+                if (choice <= 0) {
+                    throw new InvalidSelection();
+                }
+                return choice;
+            } catch (NumberFormatException | InvalidSelection e) {
+                System.out.println("Invalid input... try again");
+            }
         }
     }
 
@@ -97,6 +151,7 @@ public class EntriesManager {
         }
     }
 
+    // EFFECTS: adds given tag to media with given title
     private void addTag(String tag, String title) {
         for (Media m : archive.getDisplayEntries()) {
             if (m.getTitle().equals(title)) {
@@ -135,7 +190,7 @@ public class EntriesManager {
     private int getEndMarker() {
         while (true) {
             try {
-                System.out.println("\nEnd Marker (num episodes, chapters etc: ");
+                System.out.println("\nEnd Marker (num episodes, chapters etc): ");
                 int choice = Integer.parseInt(input.next());
                 if (choice <= 0) {
                     throw new InvalidSelection();
