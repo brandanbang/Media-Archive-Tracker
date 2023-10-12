@@ -79,7 +79,8 @@ public class Archive {
         List<Media> sortedSet = new ArrayList<>(entries);
         if (type == PROGRESS) {
             sortedSet.sort(Comparator.comparing(Media::checkProgress));
-        } else if (type == RATING) {
+        }
+        if (type == RATING) {
             sortedSet.sort(Comparator.comparing(Media::getRating));
         }
         if (!ascending) {

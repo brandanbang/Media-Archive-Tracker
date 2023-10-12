@@ -120,7 +120,7 @@ class ArchiveTest {
     void testDelEntry() {
         assertTrue(a1.getEntries().contains(m0));
         assertEquals(3, a1.getEntries().size());
-        a1.delEntry("Book 0");
+        assertTrue(a1.delEntry("Book 0"));
         assertFalse(a1.getEntries().contains(m0));
         assertEquals(2, a1.getEntries().size());
     }
@@ -130,10 +130,17 @@ class ArchiveTest {
         assertTrue(a1.getEntries().contains(m0));
         assertTrue(a1.getEntries().contains(m1));
         assertEquals(3, a1.getEntries().size());
-        a1.delEntry("Book 0");
-        a1.delEntry("Movie 0");
+        assertTrue(a1.delEntry("Book 0"));
+        assertTrue(a1.delEntry("Movie 0"));
         assertFalse(a1.getEntries().contains(m0));
         assertFalse(a1.getEntries().contains(m1));
         assertEquals(1, a1.getEntries().size());
+    }
+
+    @Test
+    void testDelEntryFalse() {
+        assertEquals(3, a1.getEntries().size());
+        assertFalse(a1.delEntry("does not exist"));
+        assertEquals(3, a1.getEntries().size());
     }
 }

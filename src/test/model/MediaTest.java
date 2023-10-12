@@ -17,10 +17,10 @@ public class MediaTest {
         testArchive = new Archive();
         m0 = new Media("Book 0", 10, testArchive, BOOK);
         m1 = new Media("Movie 1", 100, testArchive, MOVIE);
-        initializeB1();
+        initializeM1();
     }
 
-    private void initializeB1() {
+    private void initializeM1() {
         m1.addTag("a1");
         m1.addTag("a2");
         m1.addTag("a3");
@@ -34,7 +34,7 @@ public class MediaTest {
         assertTrue(m0.getTags().isEmpty());
         assertEquals("", m0.getNotes());
         assertEquals(0, m0.getProgress());
-        assertEquals(-1 , m0.getRating());
+        assertEquals("no rating" , m0.getRating());
     }
 
     @Test
@@ -114,5 +114,30 @@ public class MediaTest {
         assertFalse(m1.getTags().contains("a1"));
         assertFalse(m1.getTags().contains("a2"));
         assertEquals(1, m1.getTags().size());
+    }
+
+    @Test
+    void testToStringNoRating() {
+        assertEquals(stringBuilderHelperNoRating(), m1.toString());
+    }
+
+    private String stringBuilderHelperNoRating() {
+        return "\nname: " + m1.title + "\ntype: " + m1.type + "\ntags: " +
+                "a1, a2, a3, " + "\nrating: " + "no rating" + "\nprogress: " +
+                m1.progress + "\nend: " + m1.end + "\nprogress percent: " +
+                m1.checkProgress() + "\nnotes: " + m1.notes;
+    }
+
+    @Test
+    void testToStringRating() {
+        m1.updateRating(2);
+        assertEquals(stringBuilderHelperRating(), m1.toString());
+    }
+
+    private String stringBuilderHelperRating() {
+        return "\nname: " + m1.title + "\ntype: " + m1.type + "\ntags: " +
+                "a1, a2, a3, " + "\nrating: " + 2f + "\nprogress: " +
+                m1.progress + "\nend: " + m1.end + "\nprogress percent: " +
+                m1.checkProgress() + "\nnotes: " + m1.notes;
     }
 }
