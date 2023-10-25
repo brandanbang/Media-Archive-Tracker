@@ -17,6 +17,7 @@ public class EntertainmentTracker {
         runTracker();
     }
 
+    // EFFECTS: prompts user action and menu
     private void runTracker() {
         boolean running = true;
         String action;

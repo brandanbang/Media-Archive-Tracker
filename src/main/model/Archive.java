@@ -1,20 +1,23 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.MakeJsonType;
+
 import java.util.*;
 
 import static model.SortType.PROGRESS;
 import static model.SortType.RATING;
 
 // represents an overall archive
-public class Archive {
-
-    private Set<Media> entries;
+public class Archive implements MakeJsonType {
+    private List<Media> entries;
     private Set<String> tags;
     private List<Media> displayEntries;
 
-    // EFFECTS: constructs an archive with no used tags and empty entries of media
+    // EFFECTS: constructs an archive with given name, no used tags and empty entries of media
     public Archive() {
-        this.entries = new HashSet<>();
+        this.entries = new ArrayList<>();
         this.tags = new HashSet<>();
         this.displayEntries = new ArrayList<>();
     }
@@ -75,6 +78,8 @@ public class Archive {
         this.displayEntries = sort(false, RATING);
     }
 
+    // REQUIRES: sort type modifier must be an existing category
+    // EFFECTS: sorts and returns a sorted list based off modifier
     private List<Media> sort(boolean ascending, SortType type) {
         List<Media> sortedSet = new ArrayList<>(entries);
         if (type == PROGRESS) {
@@ -117,12 +122,44 @@ public class Archive {
         return false;
     }
 
+    // MODIFIES: json object
+    // EFFECTS: returns a JSON object with all accounts
+    @Override
+    public JSONObject convertToJson() {
+        JSONObject object = new JSONObject();
+        object.put("entries", mediasToJson());
+        object.put("tags", tagsToJson());
+        return object;
+    }
+
+    // EFFECTS: returns media entries in this archive as a JSON array
+    private JSONArray mediasToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Media m : entries) {
+            jsonArray.put(m.convertToJson());
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns tags in this archive as a JSON array
+    private JSONArray tagsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String tag : tags) {
+            jsonArray.put(tag);
+        }
+
+        return jsonArray;
+    }
+
     public Set<String> getTags() {
         return Collections.unmodifiableSet(this.tags);
     }
 
-    public Set<Media> getEntries() {
-        return Collections.unmodifiableSet(this.entries);
+    public List<Media> getEntries() {
+        return Collections.unmodifiableList(this.entries);
     }
 
     public List<Media> getDisplayEntries() {

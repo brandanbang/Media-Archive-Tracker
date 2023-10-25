@@ -19,3 +19,7 @@ friends!
 - As a user, I want to be able to view my archive entries.
 - As a user, I want to be able to sort my archive entries.
 - As a user, I want to be able to filter/hide some entries via tags.
+- As a user, I want to be able to save the changes to the archive when I want to.
+- As a user, I want to be able to load my archive when I want to.
+- As a user, I want to be prompted to save my archive when I close the application.
+- As a user, I want to be prompted to load my archive when I start the application.

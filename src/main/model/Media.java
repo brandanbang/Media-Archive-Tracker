@@ -1,30 +1,29 @@
 package model;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import org.json.JSONObject;
+import persistence.MakeJsonType;
+
+import java.util.*;
 
 // abstract class for various types of media
-public class Media {
+public class Media implements MakeJsonType {
     protected String title;
     protected Set<String> tags;
     protected float rating;
     protected int progress;
     protected int end;
-    protected String notes;
     protected Archive archive;
     protected MediaType type;
 
     // REQUIRES: end marker > 0, already existing archive to hold media entry
     // EFFECTS: constructs and generates basic media components with given info
-    //          with no tags, no notes, rating = -1, and no current progress
+    //          with no tags, rating = -1, and no current progress
     public Media(String title, int end, Archive archive, MediaType type) {
         this.title = title;
         this.tags = new HashSet<>();
         this.rating = -1;
         this.progress = 0;
         this.end = end;
-        this.notes = "";
         this.archive = archive;
         this.type = type;
     }
@@ -86,12 +85,12 @@ public class Media {
         return end;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
     public Archive getArchive() {
         return archive;
+    }
+
+    public MediaType getType() {
+        return type;
     }
 
     // EFFECT: converts and formats details of info to String
@@ -103,8 +102,7 @@ public class Media {
                 + "\nrating: " + formatRating()
                 + "\nprogress: " + this.progress
                 + "\nend: " + this.end
-                + "\nprogress percent: " + checkProgress()
-                + "\nnotes: " + this.notes;
+                + "\nprogress percent: " + checkProgress();
     }
 
     // EFFECTS: formats tags to a comma separate list without []
@@ -116,11 +114,27 @@ public class Media {
         return stb.toString();
     }
 
+    // EFFECTS: returns the formatted String for -1 as no rating
     private String formatRating() {
         if (rating == -1) {
             return "no rating";
         } else {
             return String.valueOf(rating);
         }
+    }
+
+    // MODIFIES: json object
+    // EFFECTS: returns a JSON array object with associated Media info
+    @Override
+    public JSONObject convertToJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", this.title);
+        json.put("tags", new ArrayList<>(this.tags));
+        json.put("rating", this.rating);
+        json.put("progress", this.progress);
+        json.put("end", this.end);
+        json.put("type", this.type);
+
+        return json;
     }
 }

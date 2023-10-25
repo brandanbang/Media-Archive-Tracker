@@ -32,7 +32,6 @@ public class MediaTest {
         assertEquals(10, m0.getEnd());
         assertEquals(testArchive, m0.getArchive());
         assertTrue(m0.getTags().isEmpty());
-        assertEquals("", m0.getNotes());
         assertEquals(0, m0.getProgress());
         assertEquals("no rating" , m0.getRating());
     }
@@ -125,7 +124,7 @@ public class MediaTest {
         return "\nname: " + m1.title + "\ntype: " + m1.type + "\ntags: " +
                 "a1, a2, a3, " + "\nrating: " + "no rating" + "\nprogress: " +
                 m1.progress + "\nend: " + m1.end + "\nprogress percent: " +
-                m1.checkProgress() + "\nnotes: " + m1.notes;
+                m1.checkProgress();
     }
 
     @Test
@@ -138,6 +137,6 @@ public class MediaTest {
         return "\nname: " + m1.title + "\ntype: " + m1.type + "\ntags: " +
                 "a1, a2, a3, " + "\nrating: " + 2f + "\nprogress: " +
                 m1.progress + "\nend: " + m1.end + "\nprogress percent: " +
-                m1.checkProgress() + "\nnotes: " + m1.notes;
+                m1.checkProgress();
     }
 }

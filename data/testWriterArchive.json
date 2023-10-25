@@ -1,0 +1,24 @@
+{
+    "entries": [
+        {
+            "rating": 3.14,
+            "progress": 1,
+            "end": 2,
+            "title": "Saw",
+            "type": "MOVIE",
+            "tags": ["scary"]
+        },
+        {
+            "rating": 10,
+            "progress": 12,
+            "end": 12,
+            "title": "Bocchi the Rock",
+            "type": "SERIES",
+            "tags": ["fun"]
+        }
+    ],
+    "tags": [
+        "scary",
+        "fun"
+    ]
+}
