@@ -57,7 +57,6 @@ public class FilterManager {
             } catch (CancelAction ca) {
                 System.out.print("Cancel Filter");
             }
-            System.out.println(archive.getDisplayEntries());
         } else if (action.equals("b")) {
             try {
                 String tag = tagSelector();
@@ -76,6 +75,7 @@ public class FilterManager {
     private String tagSelector() throws CancelAction {
         String tag = "";
         try {
+            System.out.print(archive.getTags() + "\n");
             System.out.println("Enter desired tag to filter: ");
             tag = input.next().toLowerCase();
             if (tag.equals("/c")) {

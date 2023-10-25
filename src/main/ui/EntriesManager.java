@@ -199,6 +199,7 @@ public class EntriesManager {
                     System.out.print(m.getTitle() + ", ");
                     entryNames.add(m.getTitle());
                 }
+                System.out.println("\n");
                 title = input.next().toLowerCase();
 
                 if (!entryNames.contains(title)) {
