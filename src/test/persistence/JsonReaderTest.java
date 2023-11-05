@@ -71,8 +71,7 @@ public class JsonReaderTest extends JsonTest {
             reader.read();
             fail("Expected Exception not thrown");
         } catch (InvalidSave e) {
-            //pass invalid save in file
-            // end exceeds cond, progress exceeds cond
+            //pass - Progress of first media > end
         }
     }
 }
