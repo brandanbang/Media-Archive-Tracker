@@ -1,0 +1,28 @@
+{
+    "entries": [
+      {
+        "title": "Pokemon Movie",
+        "tags": [
+          "sad"
+        ],
+        "rating": 10,
+        "progress": 1,
+        "end": -123,
+        "type": "MOVIE"
+      },
+      {
+        "title": "Escape Room",
+        "tags": [
+          "scary"
+        ],
+        "rating": 5,
+        "progress": 6,
+        "end": 5,
+        "type": "SERIES"
+      }
+    ],
+    "tags": [
+      "sad",
+      "scary"
+    ]
+}
