@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.InvalidSelection;
+import exceptions.TagDoesNotExist;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +13,18 @@ public class MediaTest {
     Archive testArchive;
     Media m0;
     Media m1;
+    Media m2;
 
     @BeforeEach
     void runBefore() {
-        testArchive = new Archive();
-        m0 = new Media("Book 0", 10, testArchive, BOOK);
-        m1 = new Media("Movie 1", 100, testArchive, MOVIE);
-        initializeM1();
+        try {
+            testArchive = new Archive();
+            m0 = new Media("Book 0", 10, testArchive, BOOK);
+            m1 = new Media("Movie 1", 100, testArchive, MOVIE);
+            initializeM1();
+        } catch (InvalidSelection is) {
+            fail("Invalid Selection in Media init");
+        }
     }
 
     private void initializeM1() {
@@ -33,13 +40,53 @@ public class MediaTest {
         assertEquals(testArchive, m0.getArchive());
         assertTrue(m0.getTags().isEmpty());
         assertEquals(0, m0.getProgress());
-        assertEquals("no rating" , m0.getRating());
+        assertEquals("no rating", m0.getRating());
+    }
+
+    @Test
+    void testConstructorInvalidEnd() {
+        try {
+            m2 = new Media("Book 2", 0, testArchive, BOOK);
+            fail("Invalid end; exception not thrown");
+        } catch (InvalidSelection is) {
+            //pass
+        }
     }
 
     @Test
     void testCheckProgress() {
-        m0.updateProgress(3);
-        assertEquals(30, m0.checkProgress());
+        try {
+            m0.updateProgress(3);
+            assertEquals(30, m0.checkProgress());
+        } catch (InvalidSelection is) {
+            fail("Unexpected InvalidSelection thrown");
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
+    void testCheckProgressInvalidLow() {
+        try {
+            m0.updateProgress(-1);
+            fail("InvalidSelection NOT thrown");
+        } catch (InvalidSelection is) {
+            //pass
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
+    void testCheckProgressInvalidHigh() {
+        try {
+            m0.updateProgress(11);
+            fail("InvalidSelection NOT thrown");
+        } catch (InvalidSelection is) {
+            //pass
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
     }
 
     @Test
@@ -92,27 +139,54 @@ public class MediaTest {
 
     @Test
     void testRemoveTag() {
-        assertTrue(m1.getTags().contains("a1"));
-        assertEquals(3, m1.getTags().size());
+        try {
+            assertTrue(m1.getTags().contains("a1"));
+            assertEquals(3, m1.getTags().size());
 
-        m1.removeTag("a1");
+            m1.removeTag("a1");
 
-        assertFalse(m1.getTags().contains("a1"));
-        assertEquals(2, m1.getTags().size());
+            assertFalse(m1.getTags().contains("a1"));
+            assertEquals(2, m1.getTags().size());
+        } catch (TagDoesNotExist tdne) {
+            fail("Unexpected TagDoesNotExist thrown");
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
+    void testRemoveTagDNE() {
+        try {
+            assertTrue(m1.getTags().contains("a1"));
+            assertEquals(3, m1.getTags().size());
+
+            m1.removeTag("Fake Tag");
+            fail("TagDoesNotExist NOT thrown");
+        } catch (TagDoesNotExist tdne) {
+            //pass
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
     }
 
     @Test
     void testRemoveTagMulti() {
-        assertTrue(m1.getTags().contains("a1"));
-        assertTrue(m1.getTags().contains("a2"));
-        assertEquals(3, m1.getTags().size());
+        try {
+            assertTrue(m1.getTags().contains("a1"));
+            assertTrue(m1.getTags().contains("a2"));
+            assertEquals(3, m1.getTags().size());
 
-        m1.removeTag("a1");
-        m1.removeTag("a2");
+            m1.removeTag("a1");
+            m1.removeTag("a2");
 
-        assertFalse(m1.getTags().contains("a1"));
-        assertFalse(m1.getTags().contains("a2"));
-        assertEquals(1, m1.getTags().size());
+            assertFalse(m1.getTags().contains("a1"));
+            assertFalse(m1.getTags().contains("a2"));
+            assertEquals(1, m1.getTags().size());
+        } catch (TagDoesNotExist tdne) {
+            fail("Unexpected TagDoesNotExist thrown");
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
     }
 
     @Test
@@ -128,9 +202,37 @@ public class MediaTest {
     }
 
     @Test
+    void testUpdateRatingUnder() {
+        try {
+            m1.updateRating(-1);
+            fail("Rating out of range, expect InvalidSelection");
+        } catch (InvalidSelection is) {
+            // pass
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
+    void testUpdateRatingOver() {
+        try {
+            m1.updateRating(11);
+            fail("Rating out of range, expect InvalidSelection");
+        } catch (InvalidSelection is) {
+            //pass
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
     void testToStringRating() {
-        m1.updateRating(2);
-        assertEquals(stringBuilderHelperRating(), m1.toString());
+        try {
+            m1.updateRating(2);
+            assertEquals(stringBuilderHelperRating(), m1.toString());
+        } catch (InvalidSelection is) {
+            fail("Exception not expected");
+        }
     }
 
     private String stringBuilderHelperRating() {

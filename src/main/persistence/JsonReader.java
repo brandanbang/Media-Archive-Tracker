@@ -1,5 +1,7 @@
 package persistence;
 
+import exceptions.InvalidSave;
+import exceptions.InvalidSelection;
 import model.Archive;
 import model.Media;
 import model.MediaType;
@@ -25,9 +27,13 @@ public class JsonReader {
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Archive read() throws IOException {
-        String jsonData = readFile(source);
-        JSONObject jsonObject = new JSONObject(jsonData);
-        return parseArchive(jsonObject);
+        try {
+            String jsonData = readFile(source);
+            JSONObject jsonObject = new JSONObject(jsonData);
+            return parseArchive(jsonObject);
+        } catch (InvalidSave is) {
+            throw new IOException();
+        }
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -42,7 +48,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses and returns archive from JSON object
-    private Archive parseArchive(JSONObject jsonObject) {
+    private Archive parseArchive(JSONObject jsonObject) throws InvalidSave {
         Archive archive = new Archive();
         addMedias(archive, jsonObject);
         return archive;
@@ -50,7 +56,7 @@ public class JsonReader {
 
     // MODIFIES: archive
     // EFFECTS: parses the medias from JSON and adds to given archive
-    private void addMedias(Archive archive, JSONObject jsonObject) {
+    private void addMedias(Archive archive, JSONObject jsonObject) throws InvalidSave {
         JSONArray jsonArray = jsonObject.getJSONArray("entries");
         for (Object json : jsonArray) {
             JSONObject next = (JSONObject) json;
@@ -60,18 +66,22 @@ public class JsonReader {
 
     // MODIFIES: archive
     // EFFECTS: parses media from JSON and adds to given archive
-    private void addMedia(Archive archive, JSONObject jsonObject) {
+    private void addMedia(Archive archive, JSONObject jsonObject) throws InvalidSave {
         String title = jsonObject.getString("title");
         float rating = jsonObject.getFloat("rating");
         int progress = jsonObject.getInt("progress");
         int end = jsonObject.getInt("end");
         MediaType type = MediaType.valueOf(jsonObject.getString("type"));
 
-        Media media = new Media(title, end, archive, type);
-        media.updateRating(rating);
-        addTags(media,jsonObject);
-        media.updateProgress(progress);
-        archive.addEntry(media);
+        try {
+            Media media = new Media(title, end, archive, type);
+            media.updateRating(rating);
+            addTags(media, jsonObject);
+            media.updateProgress(progress);
+            archive.addEntry(media);
+        } catch (InvalidSelection is) {
+            throw new InvalidSave();
+        }
     }
 
     // MODIFIES: media

@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.InvalidSelection;
+import exceptions.TagDoesNotExist;
 import org.json.JSONObject;
 import persistence.MakeJsonType;
 
@@ -15,10 +17,14 @@ public class Media implements MakeJsonType {
     protected Archive archive;
     protected MediaType type;
 
-    // REQUIRES: end marker > 0, already existing archive to hold media entry
-    // EFFECTS: constructs and generates basic media components with given info
+    // REQUIRES: already existing archive to hold media entry
+    // EFFECTS: if end marker <= 0, throw InvalidSelection
+    //          constructs and generates basic media components with given info
     //          with no tags, rating = -1, and no current progress
-    public Media(String title, int end, Archive archive, MediaType type) {
+    public Media(String title, int end, Archive archive, MediaType type) throws InvalidSelection {
+        if (end <= 0) {
+            throw new InvalidSelection();
+        }
         this.title = title;
         this.tags = new HashSet<>();
         this.rating = -1;
@@ -33,24 +39,30 @@ public class Media implements MakeJsonType {
         return Math.round((float) progress / end * 100);
     }
 
-    // REQUIRES: 0 < progress < end marker
-    public void updateProgress(int progress) {
+    // EFFECTS: if progress < 0 or progress > end marker, throw InvalidSelection
+    //          otherwise, change progress
+    public void updateProgress(int progress) throws InvalidSelection {
+        if (progress < 0 || progress > this.end) {
+            throw new InvalidSelection();
+        }
         this.progress = progress;
     }
 
-    // REQUIRES: 0 < given rating < 10, given rating must be at most 1 decimal digit
     // MODIFIES: this
-    // EFFECTS: updates the rating for this media
-    public void updateRating(float rating) {
+    // EFFECTS: if given rating < 0 or given rating > 10, throw InvalidSelection
+    //          otherwise, updates the rating for this media
+    public void updateRating(float rating) throws InvalidSelection {
+        if (rating < 0 || rating > 10) {
+            throw new InvalidSelection();
+        }
         this.rating = rating;
     }
 
-    // REQUIRES: tag not already assigned
     // MODIFIES: this, archive
     // EFFECTS: if given tag is already exists in archive,
-    //              add tag to this
+    //              add tag to this media
     //          if tag is not being used,
-    //              add tag to this and to archive list
+    //              add tag to this media and to archive list
     public void addTag(String tag) {
         if (!archive.getTags().contains(tag)) {
             archive.addTag(tag);
@@ -58,10 +70,13 @@ public class Media implements MakeJsonType {
         this.tags.add(tag);
     }
 
-    // REQUIRES: tag already assigned
     // MODIFIES: this
-    // EFFECTS: removes given tag from this
-    public void removeTag(String tag) {
+    // EFFECTS: if tag not assigned to this media, throw TagDoesNotExist
+    //          otherwise, removes given tag from this media
+    public void removeTag(String tag) throws TagDoesNotExist {
+        if (!this.tags.contains(tag)) {
+            throw new TagDoesNotExist();
+        }
         this.tags.remove(tag);
     }
 

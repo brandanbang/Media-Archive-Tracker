@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidSelection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,20 +31,24 @@ class ArchiveTest {
     }
 
     private void initializeMedia() {
-        m0 = new Media("Book 0", 10, a1, BOOK);
-        m1 = new Media("Movie 0", 10, a1, MOVIE);
-        m2 = new Media("Series 0", 10, a1, SERIES);
+        try {
+            m0 = new Media("Book 0", 10, a1, BOOK);
+            m1 = new Media("Movie 0", 10, a1, MOVIE);
+            m2 = new Media("Series 0", 10, a1, SERIES);
 
-        m0.addTag("thriller");
-        m1.addTag("thriller");
-        m2.addTag("comedy");
+            m0.addTag("thriller");
+            m1.addTag("thriller");
+            m2.addTag("comedy");
 
-        m0.updateProgress(5);
-        m1.updateProgress(9);
+            m0.updateProgress(5);
+            m1.updateProgress(9);
 
-        m0.updateRating(3.1f);
-        m1.updateRating(9.5f);
-        m2.updateRating(7.3f);
+            m0.updateRating(3.1f);
+            m1.updateRating(9.5f);
+            m2.updateRating(7.3f);
+        } catch (InvalidSelection is) {
+            fail("Invalid Section in Init Media");
+        }
     }
 
     @Test

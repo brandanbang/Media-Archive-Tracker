@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.InvalidSelection;
 import model.Archive;
 import model.Media;
 import model.MediaType;
@@ -25,7 +26,7 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    void testWriterEmptyArchive() {
         try {
             Archive a = new Archive();
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyArchive.json");
@@ -46,7 +47,7 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterGeneralArchive() {
         try {
             Archive a = new Archive();
             Media Saw = new Media("Saw", 2, a, MediaType.MOVIE);
@@ -86,6 +87,10 @@ public class JsonWriterTest extends JsonTest {
             checkMedia("Bocchi the Rock", tags2, 10f, 12, 12, MediaType.SERIES, entries.get(1));
 
         } catch (IOException e) {
+            fail("IOException should not have been thrown");
+        } catch (InvalidSelection is) {
+            fail("InvalidSelection should not have been thrown");
+        } catch (Exception e) {
             fail("Exception should not have been thrown");
         }
     }

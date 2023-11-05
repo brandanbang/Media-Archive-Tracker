@@ -22,22 +22,20 @@ public class Archive implements MakeJsonType {
         this.displayEntries = new ArrayList<>();
     }
 
-    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the all media that is a given tag
     public void whitelistTag(String tag) {
         this.displayEntries = filter(true, tag);
     }
 
-    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the all media that is NOT a given tag
     public void blacklistTag(String tag) {
         this.displayEntries = filter(false, tag);
     }
 
-    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media entries matching the filter
     private List<Media> filter(boolean whitelist, String tag) {
         List<Media> filteredList = new ArrayList<>();
+
         if (whitelist) {
             for (Media m : entries) {
                 if (m.getTags().contains(tag)) {
@@ -54,25 +52,21 @@ public class Archive implements MakeJsonType {
         return filteredList;
     }
 
-    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by progress percentage ascended
     public void sortProgressAscending() {
         this.displayEntries = sort(true, PROGRESS);
     }
 
-    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by progress percentage descended
     public void sortProgressDescending() {
         this.displayEntries = sort(false, PROGRESS);
     }
 
-    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by rating ascended
     public void sortRatingAscending() {
         this.displayEntries = sort(true, RATING);
     }
 
-    // REQUIRES: entries must have at least one entry
     // EFFECTS: returns the list of media sorted by rating descended
     public void sortRatingDescending() {
         this.displayEntries = sort(false, RATING);
@@ -94,9 +88,8 @@ public class Archive implements MakeJsonType {
         return sortedSet;
     }
 
-    // REQUIRES: tag not already in list of tags
     // MODIFIES: this
-    // EFFECTS: adds given tag to list of tags
+    // EFFECTS: adds given tag to set of tags, if tag already exists, do nothing
     public void addTag(String tag) {
         this.tags.add(tag);
     }

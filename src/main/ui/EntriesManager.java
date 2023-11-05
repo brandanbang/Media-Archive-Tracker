@@ -57,20 +57,24 @@ public class EntriesManager {
     // MODIFIES: this
     // EFFECTS: processes user action input
     private void processAction(String action) {
-        if (action.equals("a")) {
-            addEntry();
-            System.out.println("added");
-        } else if (action.equals("d")) {
-            delEntry();
-        } else if (action.equals("t")) {
-            tagEntry();
-            System.out.println("added tag");
-        } else if (action.equals("r")) {
-            changeRatingManager();
-        } else if (action.equals("p")) {
-            changeProgressManager();
-        } else {
-            System.out.println("Invalid Action... try again");
+        try {
+            if (action.equals("a")) {
+                addEntry();
+                System.out.println("added");
+            } else if (action.equals("d")) {
+                delEntry();
+            } else if (action.equals("t")) {
+                tagEntry();
+                System.out.println("added tag");
+            } else if (action.equals("r")) {
+                changeRatingManager();
+            } else if (action.equals("p")) {
+                changeProgressManager();
+            } else {
+                System.out.println("Invalid Action... try again");
+            }
+        } catch (InvalidSelection is) {
+            System.out.println("Invalid End Marker... Try again");
         }
     }
 
@@ -159,7 +163,7 @@ public class EntriesManager {
     }
 
     // EFFECTS: adds given tag to media with given title
-    private void changeRating(float rating, String title) {
+    private void changeRating(float rating, String title) throws InvalidSelection {
         for (Media m : archive.getDisplayEntries()) {
             if (m.getTitle().equals(title)) {
                 m.updateRating(rating);
@@ -224,7 +228,7 @@ public class EntriesManager {
 
     // MODIFIES: this, archive
     // EFFECTS: manages the steps for making a new entry
-    private void addEntry() {
+    private void addEntry() throws InvalidSelection {
         String title = getTitle();
         int end = getEndMarker();
         MediaType type = getMediaType();

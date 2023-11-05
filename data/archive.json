@@ -2,31 +2,20 @@
     "entries": [
         {
             "rating": -1,
-            "progress": 1,
+            "progress": 0,
             "end": 123,
-            "title": "aot",
-            "type": "SERIES",
-            "tags": ["cool"]
+            "title": "asd",
+            "type": "BOOK",
+            "tags": ["asd"]
         },
         {
             "rating": -1,
             "progress": 0,
-            "end": 2,
-            "title": "a",
-            "type": "BOOK",
-            "tags": ["sick"]
-        },
-        {
-            "rating": -1,
-            "progress": 0,
-            "end": 123,
-            "title": "asdasd",
-            "type": "BOOK",
+            "end": 3,
+            "title": "ajosd",
+            "type": "MOVIE",
             "tags": []
         }
     ],
-    "tags": [
-        "cool",
-        "sick"
-    ]
+    "tags": ["asd"]
 }
