@@ -26,25 +26,25 @@ public class JsonReader {
 
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Archive read() throws IOException {
-        try {
-            String jsonData = readFile(source);
-            JSONObject jsonObject = new JSONObject(jsonData);
-            return parseArchive(jsonObject);
-        } catch (InvalidSave is) {
-            throw new IOException();
-        }
+    public Archive read() throws InvalidSave {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseArchive(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
-    private String readFile(String source) throws IOException {
-        StringBuilder contentBuilder = new StringBuilder();
+    private String readFile(String source) throws InvalidSave {
+        try {
+            StringBuilder contentBuilder = new StringBuilder();
 
-        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
+                stream.forEach(s -> contentBuilder.append(s));
+            }
+
+            return contentBuilder.toString();
+        } catch (IOException ioe) {
+            throw new InvalidSave();
         }
-
-        return contentBuilder.toString();
     }
 
     // EFFECTS: parses and returns archive from JSON object

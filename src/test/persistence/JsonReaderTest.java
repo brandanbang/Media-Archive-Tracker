@@ -1,11 +1,11 @@
 package persistence;
 
+import exceptions.InvalidSave;
 import model.Archive;
 import model.Media;
 import model.MediaType;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,9 +18,9 @@ public class JsonReaderTest extends JsonTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/notRealFile.json");
         try {
-            Archive a = reader.read();
-            fail("IOException expected");
-        } catch (IOException e) {
+            reader.read();
+            fail("InvalidSave expected");
+        } catch (InvalidSave e) {
             // pass
         }
     }
@@ -33,7 +33,7 @@ public class JsonReaderTest extends JsonTest {
             Set<String> tags = new HashSet<>();
             assertTrue(a.getEntries().isEmpty());
             assertEquals(tags, a.getTags());
-        } catch (IOException e) {
+        } catch (InvalidSave e) {
             fail("Couldn't read from file");
         }
     }
@@ -59,8 +59,20 @@ public class JsonReaderTest extends JsonTest {
 
             checkMedia("Pokemon Movie", tags1, 10f, 1, 1, MediaType.MOVIE, entries.get(0));
             checkMedia("Escape Room", tags2, 5f, 2, 5, MediaType.SERIES, entries.get(1));
-        } catch (IOException e) {
+        } catch (InvalidSave e) {
             fail("Couldn't read from file");
+        }
+    }
+
+    @Test
+    void testReaderInvalidSaveArchive() {
+        JsonReader reader = new JsonReader("./data/testReaderInvalidSaveArchive.json");
+        try {
+            reader.read();
+            fail("Expected Exception not thrown");
+        } catch (InvalidSave e) {
+            //pass invalid save in file
+            // end exceeds cond, progress exceeds cond
         }
     }
 }

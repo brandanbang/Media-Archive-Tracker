@@ -1,11 +1,13 @@
 package persistence;
 
+import exceptions.InvalidSave;
 import exceptions.InvalidSelection;
 import model.Archive;
 import model.Media;
 import model.MediaType;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -41,8 +43,10 @@ public class JsonWriterTest extends JsonTest {
             assertTrue(a.getEntries().isEmpty());
             assertEquals(tags, a.getTags());
 
-        } catch (IOException e) {
-            fail("Exception should not have been thrown");
+        } catch (InvalidSave e) {
+            fail("IS should not have been thrown");
+        } catch (FileNotFoundException fnfe) {
+            fail("FNDE should not have been thrown");
         }
     }
 

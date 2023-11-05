@@ -1,12 +1,12 @@
 package ui;
 
+import exceptions.InvalidSave;
 import model.Archive;
 import model.Media;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -106,8 +106,8 @@ public class EntertainmentTracker {
         try {
             archive = reader.read();
             System.out.println("Loaded archive from save");
-        } catch (IOException e) {
-            System.out.println("Unable to read... check indicated file location");
+        } catch (InvalidSave is) {
+            System.out.println("Unable to read... check indicated file location and content info");
         }
     }
 
