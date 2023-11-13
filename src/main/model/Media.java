@@ -52,7 +52,7 @@ public class Media implements MakeJsonType {
     // EFFECTS: if given rating < 0 or given rating > 10, throw InvalidSelection
     //          otherwise, updates the rating for this media
     public void updateRating(float rating) throws InvalidSelection {
-        if (rating < 0 || rating > 10) {
+        if ((rating < 0 || rating > 10) && rating != -1) {
             throw new InvalidSelection();
         }
         this.rating = rating;
