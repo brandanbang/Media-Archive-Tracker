@@ -1,21 +1,11 @@
 {
-    "entries": [
-        {
-            "rating": -1,
-            "progress": 0,
-            "end": 123,
-            "title": "asd",
-            "type": "BOOK",
-            "tags": ["asd"]
-        },
-        {
-            "rating": -1,
-            "progress": 0,
-            "end": 3,
-            "title": "ajosd",
-            "type": "MOVIE",
-            "tags": []
-        }
-    ],
-    "tags": ["asd"]
+    "entries": [{
+        "rating": -1,
+        "progress": 0,
+        "end": 10,
+        "title": "test",
+        "type": "BOOK",
+        "tags": []
+    }],
+    "tags": []
 }
