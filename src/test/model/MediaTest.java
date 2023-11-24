@@ -5,7 +5,11 @@ import exceptions.TagDoesNotExist;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static model.MediaType.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import static model.MediaType.BOOK;
+import static model.MediaType.MOVIE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MediaTest {
@@ -14,6 +18,7 @@ public class MediaTest {
     Media m0;
     Media m1;
     Media m2;
+    Media m3;
 
     @BeforeEach
     void runBefore() {
@@ -21,6 +26,8 @@ public class MediaTest {
             testArchive = new Archive();
             m0 = new Media("Book 0", 10, testArchive, BOOK);
             m1 = new Media("Movie 1", 100, testArchive, MOVIE);
+
+            m3 = new Media("Book 0", 110, testArchive, BOOK);
             initializeM1();
         } catch (InvalidSelection is) {
             fail("Invalid Selection in Media init");
@@ -202,9 +209,21 @@ public class MediaTest {
     }
 
     @Test
-    void testUpdateRatingUnder() {
+    void testUpdateRatingNone() {
         try {
             m1.updateRating(-1);
+            // pass
+        } catch (InvalidSelection is) {
+            fail("Unexpected IS thrown");
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
+    void testUpdateRatingUnder() {
+        try {
+            m1.updateRating(-2);
             fail("Rating out of range, expect InvalidSelection");
         } catch (InvalidSelection is) {
             // pass
@@ -218,6 +237,30 @@ public class MediaTest {
         try {
             m1.updateRating(11);
             fail("Rating out of range, expect InvalidSelection");
+        } catch (InvalidSelection is) {
+            //pass
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
+    void testUpdateEnd() {
+        try {
+            m1.updateEnd(123123);
+            //pass
+        } catch (InvalidSelection is) {
+            fail("Unexpected IS thrown");
+        } catch (Exception e) {
+            fail("Unexpected Exception thrown");
+        }
+    }
+
+    @Test
+    void testUpdateEndInvalid() {
+        try {
+            m1.updateEnd(0);
+            fail("end cannot be non-positive");
         } catch (InvalidSelection is) {
             //pass
         } catch (Exception e) {
@@ -240,5 +283,39 @@ public class MediaTest {
                 "a1, a2, a3, " + "\nrating: " + 2f + "\nprogress: " +
                 m1.progress + "\nend: " + m1.end + "\nprogress percent: " +
                 m1.checkProgress();
+    }
+
+    @Test
+    void testEquals() {
+        assertEquals(m0, m3);
+    }
+
+    @Test
+    void testNotEquals() {
+        assertNotEquals(m0, m1);
+    }
+
+    @Test
+    void testNotEqualsNull() {
+        assertNotEquals(m0, null);
+    }
+
+    @Test
+    void testNotEqualsDiffObject() {
+        assertNotEquals("asda312341", m0);
+    }
+
+    @Test
+    void testEqualsHash() {
+        Set<Media> set = new HashSet<>();
+        set.add(m0);
+        assertTrue(set.contains(m3));
+    }
+
+    @Test
+    void testNotEqualsHash() {
+        Set<Media> set = new HashSet<>();
+        set.add(m0);
+        assertFalse(set.contains(m1));
     }
 }

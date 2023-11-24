@@ -8,45 +8,19 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Scanner;
 
 // represents the Tracker application
 public class EntertainmentTracker {
     private static final String JSON_STORE = "./data/archive.json";
-    private Scanner input;
-    private Archive archive;
-    private JsonWriter writer;
-    private JsonReader reader;
+    protected Archive archive;
+    protected JsonWriter writer;
+    protected JsonReader reader;
 
     // EFFECT: runs Tracker Application
     public EntertainmentTracker() {
         archive = new Archive();
         writer = new JsonWriter(JSON_STORE);
         reader = new JsonReader(JSON_STORE);
-        runTracker();
-    }
-
-    // EFFECTS: prompts user action and menu
-    private void runTracker() {
-        boolean running = true;
-        String action;
-
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-
-        while (running) {
-            displayEntries();
-            displayMenu();
-            action = input.next().toLowerCase();
-
-            if (action.equals("q")) {
-                savePrompt();
-                running = false;
-                System.out.print("\nSession Ended");
-            } else {
-                actionManager(action);
-            }
-        }
     }
 
     // EFFECTS: displays the current display type of entries
@@ -59,37 +33,27 @@ public class EntertainmentTracker {
         System.out.println(stb);
     }
 
-    // EFFECTS: displays possible actions to user
-    private void displayMenu() {
-        System.out.println("\nActions:");
-        System.out.println("\tm | manage entries");
-        System.out.println("\tf | filter");
-        System.out.println("\ts | sort");
-        System.out.println("\tsa | save");
-        System.out.println("\tlo | load");
-        System.out.println("\tq | quit");
-    }
 
-    // MODIFIES; this
-    // EFFECTS: processes user action input
-    private void actionManager(String action) {
-        if (action.equals("f")) {
-            new ui.FilterManager(archive);
-        } else if (action.equals("s")) {
-            new ui.SortManager(archive);
-        } else if (action.equals("m")) {
-            new ui.EntriesManager(archive);
-        } else if (action.equals("sa")) {
-            save();
-        } else if (action.equals("lo")) {
-            load();
-        } else {
-            System.out.println("Invalid Action... Try Again");
-        }
-    }
+//    // MODIFIES; this
+//    // EFFECTS: processes user action input
+//    public void actionManager(String action) {
+//        if (action.equals("f")) {
+//            new FilterManager(archive);
+//        } else if (action.equals("s")) {
+//            new SortManager(archive);
+//        } else if (action.equals("m")) {
+//            new EntriesManager(archive);
+//        } else if (action.equals("sa")) {
+//            save();
+//        } else if (action.equals("lo")) {
+//            load();
+//        } else {
+//            System.out.println("Invalid Action... Try Again");
+//        }
+//    }
 
     // EFFECTS: saves archive to file
-    private void save() {
+    public void save() {
         try {
             writer.open();
             writer.write(archive);
@@ -102,21 +66,12 @@ public class EntertainmentTracker {
 
     // MODIFIES: this
     // EFFECTS: loads archive from file
-    private void load() {
+    public void load() {
         try {
             archive = reader.read();
             System.out.println("Loaded archive from save");
         } catch (InvalidSave is) {
             System.out.println("Unable to read... check indicated file location and content info");
-        }
-    }
-
-    // EFFECTS: prompts user on whether they want to save
-    private void savePrompt() {
-        System.out.println("Would you like to save your changes?\n Any unsaved progress will be lost. (y|n)\n");
-        String action = input.next().toLowerCase();
-        if (action.equals("y") || action.equals("yes")) {
-            save();
         }
     }
 }

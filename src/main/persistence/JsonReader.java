@@ -51,6 +51,7 @@ public class JsonReader {
     private Archive parseArchive(JSONObject jsonObject) throws InvalidSave {
         Archive archive = new Archive();
         addMedias(archive, jsonObject);
+        addAllTags(archive, jsonObject);
         return archive;
     }
 
@@ -90,6 +91,15 @@ public class JsonReader {
         JSONArray jsonArray = jsonObject.getJSONArray("tags");
         for (int i = 0; i < jsonArray.length(); i++) {
             media.addTag(jsonArray.getString(i));
+        }
+    }
+
+    // MODIFIES: archive
+    // EFFECTS: parses all tags from JSON and adds it to the archive storage
+    private void addAllTags(Archive archive, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("tags");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            archive.addTag(jsonArray.getString(i));
         }
     }
 }

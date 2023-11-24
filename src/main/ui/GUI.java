@@ -1,31 +1,38 @@
 package ui;
 
+import model.Media;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// class that manages the GUI app
 public class GUI extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
-    private EntertainmentTracker et;
+    private EntertainmentTracker tracker;
     private JPanel jpanel;
+    private Table table;
+    private TableModel tableModel;
+    private TableManagerPopUp tableManagerPopUp;
 
+    // EFFECTS: creates the entertainment tracker and corresponding gui components
     public GUI() {
-//        this.et = new EntertainmentTracker();
+        this.tracker = new EntertainmentTracker();
+
         this.jpanel = new JPanel();
         this.jpanel.addMouseListener(new DesktopFocusAction());
-
         setContentPane(jpanel);
         setTitle("Entertainment Tracker");
+        setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
-
 
 
         //todo: add elements here
 
-        addMenu();
-
+        initializeTopMenu();
+        initializeTable();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreOnScreen();
@@ -35,6 +42,7 @@ public class GUI extends JFrame {
     // represents an action to be taken when user clicks
     // CITATION: AlarmController
     private class DesktopFocusAction extends MouseAdapter {
+        // EFFECTS: sets the window focus to the mouse event
         @Override
         public void mouseClicked(MouseEvent e) {
             GUI.this.requestFocusInWindow();
@@ -50,32 +58,51 @@ public class GUI extends JFrame {
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: adds actions as a dropdown to the top of the window
-    private void addMenu() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
-        fileMenu.setMnemonic('S');
-        addMenuItem(fileMenu, new SaveAction(),
-                KeyStroke.getKeyStroke("control S"));
-        addMenuItem(fileMenu, new LoadAction(), KeyStroke.getKeyStroke("control L"));
-        menuBar.add(fileMenu);
-
-        setJMenuBar(menuBar);
+    private void initializeTopMenu() {
+        TopMenu topMenu = new TopMenu(this);
+        setJMenuBar(topMenu);
     }
 
-    /**
-     * Adds an item with given handler to the given menu
-     * @param theMenu  menu to which new item is added
-     * @param action   handler for new menu item
-     * @param accelerator    keystroke accelerator for this menu item
-     */
-    private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
-        JMenuItem menuItem = new JMenuItem(action);
-        menuItem.setMnemonic(menuItem.getText().charAt(0));
-        menuItem.setAccelerator(accelerator);
-        theMenu.add(menuItem);
+    // MODIFIES: this
+    // EFFECTS: sets up the table display for archive
+    private void initializeTable() {
+        tableModel = new TableModel();
+        table = new Table(tableModel);
+        tableManagerPopUp = new TableManagerPopUp(this, table);
+        JScrollPane tableScrollPane = new JScrollPane(table);
+        this.add(tableScrollPane, BorderLayout.CENTER);
     }
+
+    // MODIFIES: this
+    // EFFECTS: loads info from archive to ui table
+    void refreshTable() {
+        this.tableModel.setRowCount(0);
+        for (Media m : tracker.archive.getDisplayEntries()) {
+            String media = m.toString();
+            String[] parts = media.split("\n");
+
+            String title = parts[1];
+            String type = parts[2];
+            String tags = parts[3];
+            String rating = parts[4];
+            String progress = parts[5];
+            String end = parts[6];
+            String progressPercent = parts[7];
+
+            Object[] data = {title, type, rating, progressPercent, progress, end,
+                    tags};
+            this.tableModel.addRow(data);
+
+            //todo: change implementation of to String method in MEDIA to not have the label with it
+            //      OR add getters that also access the helper methods in the tostring method
+        }
+    }
+
+    public EntertainmentTracker getTracker() {
+        return tracker;
+    }
+
+    //todo: refactor/move the top menu bar to its own class(es)
 }

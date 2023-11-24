@@ -23,7 +23,7 @@ public class Media implements MakeJsonType {
     //          with no tags, rating = -1, and no current progress
     public Media(String title, int end, Archive archive, MediaType type) throws InvalidSelection {
         if (end <= 0) {
-            throw new InvalidSelection();
+            throw new InvalidSelection("End Marker cannot be negative");
         }
         this.title = title;
         this.tags = new HashSet<>();
@@ -42,20 +42,34 @@ public class Media implements MakeJsonType {
     // EFFECTS: if progress < 0 or progress > end marker, throw InvalidSelection
     //          otherwise, change progress
     public void updateProgress(int progress) throws InvalidSelection {
-        if (progress < 0 || progress > this.end) {
-            throw new InvalidSelection();
+        if (progress < 0) {
+            throw new InvalidSelection("Progress cannot be negative.");
+        } else if (progress > this.end) {
+            throw new InvalidSelection("Progress cannot exceed the end marker.");
+        } else {
+            this.progress = progress;
         }
-        this.progress = progress;
     }
 
     // MODIFIES: this
     // EFFECTS: if given rating < 0 or given rating > 10, throw InvalidSelection
     //          otherwise, updates the rating for this media
     public void updateRating(float rating) throws InvalidSelection {
-        if ((rating < 0 || rating > 10) && rating != -1) {
-            throw new InvalidSelection();
+        if ((rating < 0 || rating > 10) && (rating != -1)) {
+            throw new InvalidSelection("Given Rating is outside the acceptable range [0, 10]");
         }
         this.rating = rating;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if given end point <= 0, throw InvalidSelection
+    //          otherwise, updates the end point
+    public void updateEnd(int end) throws InvalidSelection {
+        if (end <= 0) {
+            throw new InvalidSelection("End Marker must be non positive");
+        }
+
+        this.end = end;
     }
 
     // MODIFIES: this, archive
@@ -151,5 +165,23 @@ public class Media implements MakeJsonType {
         json.put("type", this.type);
 
         return json;
+    }
+
+    // EFFECTS: returns true if the titles of medias match
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Media media = (Media) o;
+        return Objects.equals(title, media.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title);
     }
 }

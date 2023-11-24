@@ -6,8 +6,7 @@ import persistence.MakeJsonType;
 
 import java.util.*;
 
-import static model.SortType.PROGRESS;
-import static model.SortType.RATING;
+import static model.SortType.*;
 
 // represents an overall archive
 public class Archive implements MakeJsonType {
@@ -72,6 +71,16 @@ public class Archive implements MakeJsonType {
         this.displayEntries = sort(false, RATING);
     }
 
+    // EFFECTS: returns the list of media sorted by rating ascended
+    public void sortTitleAscending() {
+        this.displayEntries = sort(true, TITLE);
+    }
+
+    // EFFECTS: returns the list of media sorted by rating descended
+    public void sortTitleDescending() {
+        this.displayEntries = sort(false, TITLE);
+    }
+
     // REQUIRES: sort type modifier must be an existing category
     // EFFECTS: sorts and returns a sorted list based off modifier
     private List<Media> sort(boolean ascending, SortType type) {
@@ -81,6 +90,9 @@ public class Archive implements MakeJsonType {
         }
         if (type == RATING) {
             sortedSet.sort(Comparator.comparing(Media::getRating));
+        }
+        if (type == TITLE) {
+            sortedSet.sort(Comparator.comparing(Media::getTitle));
         }
         if (!ascending) {
             Collections.reverse(sortedSet);
@@ -104,9 +116,9 @@ public class Archive implements MakeJsonType {
     // MODIFIES: this
     // EFFECTS: removes entry from archive based off given name and returns true
     //          if not exists, return false
-    public boolean delEntry(String title) {
+    public boolean delEntry(Media entry) {
         for (Media m : entries) {
-            if (m.getTitle().equals(title)) {
+            if (m.equals(entry)) {
                 entries.remove(m);
                 displayEntries.remove(m);
                 return true;

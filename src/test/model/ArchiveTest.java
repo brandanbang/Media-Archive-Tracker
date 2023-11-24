@@ -12,6 +12,7 @@ class ArchiveTest {
     Archive a0;
     Archive a1;
 
+    Media m;
     Media m0;
     Media m1;
     Media m2;
@@ -35,6 +36,7 @@ class ArchiveTest {
             m0 = new Media("Book 0", 10, a1, BOOK);
             m1 = new Media("Movie 0", 10, a1, MOVIE);
             m2 = new Media("Series 0", 10, a1, SERIES);
+            m = new Media("DNE", 123, a1, SERIES);
 
             m0.addTag("thriller");
             m1.addTag("thriller");
@@ -122,10 +124,26 @@ class ArchiveTest {
     }
 
     @Test
+    void testSortTitleAsc() {
+        a1.sortTitleAscending();
+        assertEquals(m0, a1.getDisplayEntries().get(0));
+        assertEquals(m1, a1.getDisplayEntries().get(1));
+        assertEquals(m2, a1.getDisplayEntries().get(2));
+    }
+
+    @Test
+    void testSortTitleDesc() {
+        a1.sortTitleDescending();
+        assertEquals(m2, a1.getDisplayEntries().get(0));
+        assertEquals(m1, a1.getDisplayEntries().get(1));
+        assertEquals(m0, a1.getDisplayEntries().get(2));
+    }
+
+    @Test
     void testDelEntry() {
         assertTrue(a1.getEntries().contains(m0));
         assertEquals(3, a1.getEntries().size());
-        assertTrue(a1.delEntry("Book 0"));
+        assertTrue(a1.delEntry(m0));
         assertFalse(a1.getEntries().contains(m0));
         assertEquals(2, a1.getEntries().size());
     }
@@ -135,8 +153,8 @@ class ArchiveTest {
         assertTrue(a1.getEntries().contains(m0));
         assertTrue(a1.getEntries().contains(m1));
         assertEquals(3, a1.getEntries().size());
-        assertTrue(a1.delEntry("Book 0"));
-        assertTrue(a1.delEntry("Movie 0"));
+        assertTrue(a1.delEntry(m0));
+        assertTrue(a1.delEntry(m1));
         assertFalse(a1.getEntries().contains(m0));
         assertFalse(a1.getEntries().contains(m1));
         assertEquals(1, a1.getEntries().size());
@@ -145,7 +163,7 @@ class ArchiveTest {
     @Test
     void testDelEntryFalse() {
         assertEquals(3, a1.getEntries().size());
-        assertFalse(a1.delEntry("does not exist"));
+        assertFalse(a1.delEntry(m));
         assertEquals(3, a1.getEntries().size());
     }
 }

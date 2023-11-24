@@ -10,11 +10,13 @@ import java.io.IOException;
 // represents the action of load the archive from file
 public class LoadAction extends AbstractAction {
 
-    Icon icon;
+    private Icon icon;
+    private GUI gui;
 
     // EFFECTS: initializes the load action
-    public LoadAction() {
+    public LoadAction(GUI gui) {
         super("Load");
+        this.gui = gui;
         try {
             Image image = ImageIO.read(new File("./images/load icon.jpg"));
             icon = new ImageIcon(image);
@@ -33,15 +35,16 @@ public class LoadAction extends AbstractAction {
                 "Would you like to load?\nThe current progress will be overwritten.",
                 "Exit",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.QUESTION_MESSAGE,
                 icon,
                 null,
                 null);
         if (option == JOptionPane.YES_OPTION) {
-            //save
-            System.out.println("saved data");
+            this.gui.getTracker().load();
+            this.gui.refreshTable();
+            System.out.println("data loaded");
         } else {
-            System.out.println("data NOT saved");
+            System.out.println("data no loaded");
         }
     }
 }
