@@ -14,6 +14,7 @@ started. Furthermore, the archive and filter system will help in giving recommen
 friends!
 
 ## User Stories
+
 - As a user, I want to be able to create and add new entries of media to the archive.
 - As a user, I want to be able to tag my entries with new or old tags.
 - As a user, I want to be able to view my archive entries.
@@ -22,3 +23,43 @@ friends!
 - As a user, I want to be able to save the changes to the archive when I want to.
 - As a user, I want to be able to load my archive when I want to.
 - As a user, I want to be prompted to save my archive when I close the application.
+
+# Instructions for Grader
+
+- Adding Multiple Xs to Y
+    - Right-Click
+    - Select 'Add'
+    - Enter a Title and end marker (episode, chapter etc)
+    - Confirm the addition with 'OK' button
+    - Repeat the step above for multiple additions
+
+
+- Viewing List of Xs in Y
+    - When Media entries are added to the Archive, they are automatically loaded to be viewed
+    - To Sort or Filter the list view:
+      - Select 'View' located in the top left corner
+      - Select the sort type & fill out the prompt
+      - Confirm and the list view will update
+    - To Reset the filters:
+      - 'View' --> 'Reset'
+
+
+- Visual Component
+  - Any action to modify the Archive will contain an icon on the popup:
+    - i.e. Tagging the Media:
+      - Left-Click an already existing Media to Select
+      - Right Click
+      - Select 'Tag'
+      - Pop up with a visual component and entries to add tags appears
+
+
+- Save
+    - Select 'File' located in the top left corner
+    - Select 'Save'
+    - Confirm the save with 'YES' button
+
+
+- Load
+    - Select 'File' located in the top left corner
+    - Select 'Load'
+    - Confirm the save with 'YES' button 
