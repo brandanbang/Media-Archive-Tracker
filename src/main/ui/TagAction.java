@@ -14,6 +14,7 @@ public class TagAction extends TableActions {
     private DefaultListModel<String> currentTagsModel;
     private JTextField tagEntry;
 
+    // manages the action of adding a tag from an entry
     public TagAction(GUI gui, int selectedRow) {
         super(gui, selectedRow, "Tag", "./images/tag icon.png");
     }
@@ -21,7 +22,7 @@ public class TagAction extends TableActions {
     // MODIFIES: this
     // EFFECTS: initializes the entry boxes for tags
     @Override
-    void initializeEntries() {
+    public void initializeEntries() {
         this.mediaPanel.setLayout(new GridLayout(0, 3));
         tagEntry = new JTextField(10);
 
@@ -70,7 +71,8 @@ public class TagAction extends TableActions {
         mediaPanel.add(new JScrollPane(currentTags));
     }
 
-
+    // MODIFIES: archive
+    // EFFECTS: adds selected tag to selected entry
     @Override
     void mediaAction() {
         String tag = tagEntry.getText();

@@ -22,7 +22,7 @@ public class EditAction extends TableActions {
     // MODIFIES: this
     // EFFECTS: initializes the entry boxes for adding a new entry
     @Override
-    void initializeEntries() {
+    public void initializeEntries() {
         this.mediaPanel.setLayout(new GridLayout(0,4));
         titleEntry = new JTextField(selectedMedia.getTitle(), 10);
         titleEntry.setEditable(false);

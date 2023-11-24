@@ -28,9 +28,6 @@ public class GUI extends JFrame {
         setLayout(new BorderLayout());
         setSize(WIDTH, HEIGHT);
 
-
-        //todo: add elements here
-
         initializeTopMenu();
         initializeTable();
 
@@ -103,6 +100,4 @@ public class GUI extends JFrame {
     public EntertainmentTracker getTracker() {
         return tracker;
     }
-
-    //todo: refactor/move the top menu bar to its own class(es)
 }

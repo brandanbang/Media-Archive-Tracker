@@ -10,21 +10,17 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-// represents the action of filtering the displayed entries
+// represents the action of resetting the filters of the displayed entries
 public class ResetViewAction extends AbstractAction implements ActionListener {
 
     private Icon icon;
     private GUI gui;
-    private JPanel mediaPanel;
-    private JComboBox<String> filterTypeSelector;
-    private JComboBox<String> tagSelector;
 
 
     // EFFECTS: initializes the filter action
     public ResetViewAction(GUI gui) {
         super("Reset");
         this.gui = gui;
-        this.mediaPanel = new JPanel();
 
         try {
             Image image = ImageIO.read(new File("./images/reset icon.jpg"));

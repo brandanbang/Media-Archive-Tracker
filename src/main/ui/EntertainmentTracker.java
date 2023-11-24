@@ -2,12 +2,10 @@ package ui;
 
 import exceptions.InvalidSave;
 import model.Archive;
-import model.Media;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 // represents the Tracker application
 public class EntertainmentTracker {
@@ -22,35 +20,6 @@ public class EntertainmentTracker {
         writer = new JsonWriter(JSON_STORE);
         reader = new JsonReader(JSON_STORE);
     }
-
-    // EFFECTS: displays the current display type of entries
-    private void displayEntries() {
-        List<Media> displayEntry = archive.getDisplayEntries();
-        StringBuilder stb = new StringBuilder();
-        for (Media m : displayEntry) {
-            stb.append(m).append("\n");
-        }
-        System.out.println(stb);
-    }
-
-
-//    // MODIFIES; this
-//    // EFFECTS: processes user action input
-//    public void actionManager(String action) {
-//        if (action.equals("f")) {
-//            new FilterManager(archive);
-//        } else if (action.equals("s")) {
-//            new SortManager(archive);
-//        } else if (action.equals("m")) {
-//            new EntriesManager(archive);
-//        } else if (action.equals("sa")) {
-//            save();
-//        } else if (action.equals("lo")) {
-//            load();
-//        } else {
-//            System.out.println("Invalid Action... Try Again");
-//        }
-//    }
 
     // EFFECTS: saves archive to file
     public void save() {

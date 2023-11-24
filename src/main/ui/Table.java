@@ -11,8 +11,8 @@ public class Table extends JTable {
 
     // MODIFIES: this
     // EFFECTS: sets up the table display for archive
-    public Table(DefaultTableModel initalizeTableModel) {
-        super(initalizeTableModel);
+    public Table(DefaultTableModel initializeTableModel) {
+        super(initializeTableModel);
 
         this.setRowHeight(40);
         this.getTableHeader().setReorderingAllowed(false);

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// represents the popup for managing the entries of the archive
 public class TableManagerPopUp extends JPopupMenu implements ActionListener {
 
     private GUI gui;
@@ -15,6 +16,7 @@ public class TableManagerPopUp extends JPopupMenu implements ActionListener {
     private JMenuItem tag;
     private JMenuItem untag;
 
+    // EFFECTS: manages the popup
     public TableManagerPopUp(GUI gui, Table table) {
         super();
         this.table = table;
@@ -43,6 +45,8 @@ public class TableManagerPopUp extends JPopupMenu implements ActionListener {
         this.table.addMouseListener(new TableMouseListener(this.table));
     }
 
+    // MODIFIES: archive
+    // EFFECTS: dispatches the actions according to what is selected
     @Override
     public void actionPerformed(ActionEvent e) {
         JMenuItem menuItem = (JMenuItem) e.getSource();

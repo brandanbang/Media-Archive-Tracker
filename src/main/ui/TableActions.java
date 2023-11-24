@@ -42,7 +42,7 @@ public abstract class TableActions {
 
     // MODIFIES: this
     // EFFECTS: initializes the entry boxes
-    abstract void initializeEntries();
+    protected abstract void initializeEntries();
 
     // MODIFIES: this
     // EFFECTS: creates the popup menu

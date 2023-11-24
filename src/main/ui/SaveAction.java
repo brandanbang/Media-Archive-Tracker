@@ -40,7 +40,6 @@ public class SaveAction extends AbstractAction {
                 null,
                 null);
         if (option == JOptionPane.YES_OPTION) {
-            //save
             this.gui.getTracker().save();
             System.out.println("saved data");
         } else {

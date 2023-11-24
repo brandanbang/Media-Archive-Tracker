@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 // represents the action adding entries
 public class AddAction extends TableActions {
 
-    private static String[] OPTIONS = Stream.of(MediaType.values()).map(MediaType::name).toArray(String[]::new);
+    private static final String[] OPTIONS = Stream.of(MediaType.values()).map(MediaType::name).toArray(String[]::new);
     private JTextField titleEntry;
     private JComboBox<String> typeOptions;
     private JTextField endMarkerEntry;
@@ -25,7 +25,7 @@ public class AddAction extends TableActions {
     // MODIFIES: this
     // EFFECTS: initializes the entry boxes for adding a new entry
     @Override
-    void initializeEntries() {
+    public void initializeEntries() {
         this.mediaPanel.setLayout(new GridLayout(0,2));
         titleEntry = new JTextField(10);
         typeOptions = new JComboBox<>(OPTIONS);

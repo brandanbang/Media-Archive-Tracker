@@ -14,14 +14,15 @@ public class UnTagAction extends TableActions {
     private DefaultListModel<String> currentTagsModel;
     private JTextField tagEntry;
 
+    // manages the action of removing a tag from an entry
     public UnTagAction(GUI gui, int selectedRow) {
         super(gui, selectedRow, "Tag", "./images/tag icon.png");
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the entry boxes for tags
+    // EFFECTS: initializes the entry boxes for untagging
     @Override
-    void initializeEntries() {
+    public void initializeEntries() {
         this.mediaPanel.setLayout(new GridLayout(0, 3));
         tagEntry = new JTextField(10);
 
@@ -37,7 +38,7 @@ public class UnTagAction extends TableActions {
         mediaPanel.add(tagEntry);
     }
 
-    // MODIFIES: this;
+    // MODIFIES: this
     // EFFECTS: shows all existing tags in archive
     private void tagOptions() {
         Set<String> tagSet = gui.getTracker().archive.getTags();
@@ -54,7 +55,7 @@ public class UnTagAction extends TableActions {
         mediaPanel.add(new JScrollPane(allTags));
     }
 
-    // MODIFIES:
+    // MODIFIES: this
     // EFFECTS: shows all tags associated with selected entry
     private void currentTags() {
         Set<String> tagSet = selectedMedia.getTags();
@@ -70,7 +71,8 @@ public class UnTagAction extends TableActions {
         mediaPanel.add(new JScrollPane(currentTags));
     }
 
-
+    // MODIFIES: archive
+    // EFFECTS: removes selected tag from selected entry
     @Override
     void mediaAction() {
         try {

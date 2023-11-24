@@ -302,7 +302,7 @@ public class MediaTest {
 
     @Test
     void testNotEqualsDiffObject() {
-        assertNotEquals("asda312341", m0);
+        assertNotEquals(testArchive, m0);
     }
 
     @Test
