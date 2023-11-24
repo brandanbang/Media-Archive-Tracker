@@ -287,22 +287,22 @@ public class MediaTest {
 
     @Test
     void testEquals() {
-        assertEquals(m0, m3);
+        assertTrue(m0.equals(m3));
     }
 
     @Test
     void testNotEquals() {
-        assertNotEquals(m0, m1);
+        assertFalse(m0.equals(m1));
     }
 
     @Test
     void testNotEqualsNull() {
-        assertNotEquals(m0, null);
+        assertFalse(m0.equals(null));
     }
 
     @Test
     void testNotEqualsDiffObject() {
-        assertNotEquals(testArchive, m0);
+        assertFalse(m0.equals(testArchive));
     }
 
     @Test
