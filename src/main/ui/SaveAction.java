@@ -33,7 +33,7 @@ public class SaveAction extends AbstractAction {
         int option = JOptionPane.showOptionDialog(
                 null,
                 "Would you like to save?\nThe previous save will be overwritten.",
-                "Exit",
+                "Save",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 icon,

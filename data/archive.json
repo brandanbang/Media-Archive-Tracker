@@ -31,6 +31,14 @@
             "title": "21",
             "type": "SERIES",
             "tags": []
+        },
+        {
+            "rating": -1,
+            "progress": 0,
+            "end": 123,
+            "title": "testing",
+            "type": "MOVIE",
+            "tags": []
         }
     ],
     "tags": [

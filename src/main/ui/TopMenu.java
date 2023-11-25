@@ -6,6 +6,14 @@ import java.awt.*;
 // represents the top bar and its associated actions
 public class TopMenu extends JMenuBar {
     private GUI gui;
+    JMenu persistenceMenu;
+    static JMenuItem save;
+    JMenuItem load;
+    JMenu viewMenu;
+    JMenuItem filter;
+    JMenuItem sort;
+    JMenuItem reset;
+
 
     public TopMenu(GUI gui) {
         super();
@@ -17,34 +25,38 @@ public class TopMenu extends JMenuBar {
     // MODIFIES: this
     // EFFECTS: creates and adds persistence actions to the menu
     private void persistenceOptions() {
-        JMenu fileMenu = new JMenu("File");
-        fileMenu.setMnemonic('P');
-        addMenuItem(fileMenu, new SaveAction(gui), KeyStroke.getKeyStroke("control S"));
-        addMenuItem(fileMenu, new LoadAction(gui), KeyStroke.getKeyStroke("control L"));
-        this.add(fileMenu, BorderLayout.PAGE_START);
+        persistenceMenu = new JMenu("File");
+        persistenceMenu.setMnemonic('P');
+
+        save = new JMenuItem(new SaveAction(gui));
+        load = new JMenuItem(new LoadAction(gui));
+
+        save.setAccelerator(KeyStroke.getKeyStroke("control S"));
+        load.setAccelerator(KeyStroke.getKeyStroke("control L"));
+
+        persistenceMenu.add(save);
+        persistenceMenu.add(load);
+        this.add(persistenceMenu, BorderLayout.PAGE_START);
     }
 
     // MODIFIES: this
     // EFFECTS: creates and adds filter actions to the menu
     private void viewOptions() {
-        JMenu fileMenu = new JMenu("View");
-        fileMenu.setMnemonic('V');
-        addMenuItem(fileMenu, new FilterAction(gui), KeyStroke.getKeyStroke("control F"));
-        addMenuItem(fileMenu, new SortAction(gui), KeyStroke.getKeyStroke("control O"));
-        addMenuItem(fileMenu, new ResetViewAction(gui), KeyStroke.getKeyStroke("control P"));
-        this.add(fileMenu, BorderLayout.PAGE_START);
-    }
+        viewMenu = new JMenu("View");
+        viewMenu.setMnemonic('V');
 
-    // MODIFIES: this
-    // EFFECTS: adds an item with given handler to the given menu
-    //          theMenu     : menu to which the item is added
-    //          action      : handler for item
-    //          accelerator : keystroke accelerator/ shortcut for this item
-    // CITATION: AlarmController
-    private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
-        JMenuItem menuItem = new JMenuItem(action);
-        menuItem.setMnemonic(menuItem.getText().charAt(0));
-        menuItem.setAccelerator(accelerator);
-        theMenu.add(menuItem);
+        filter = new JMenuItem(new FilterAction(gui));
+        sort = new JMenuItem(new SortAction(gui));
+        reset = new JMenuItem(new ResetViewAction(gui));
+
+        filter.setAccelerator(KeyStroke.getKeyStroke("control F"));
+        sort.setAccelerator(KeyStroke.getKeyStroke("control O"));
+        reset.setAccelerator(KeyStroke.getKeyStroke("control P"));
+
+        viewMenu.add(filter);
+        viewMenu.add(sort);
+        viewMenu.add(reset);
+
+        this.add(viewMenu, BorderLayout.PAGE_START);
     }
 }

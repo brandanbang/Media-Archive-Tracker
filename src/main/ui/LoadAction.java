@@ -33,7 +33,7 @@ public class LoadAction extends AbstractAction {
         int option = JOptionPane.showOptionDialog(
                 null,
                 "Would you like to load?\nThe current progress will be overwritten.",
-                "Exit",
+                "Load",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 icon,

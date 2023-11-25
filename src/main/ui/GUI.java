@@ -4,8 +4,7 @@ import model.Media;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 // class that manages the GUI app
 public class GUI extends JFrame {
@@ -16,6 +15,7 @@ public class GUI extends JFrame {
     private Table table;
     private TableModel tableModel;
     private TableManagerPopUp tableManagerPopUp;
+    private TopMenu topMenu;
 
     // EFFECTS: creates the entertainment tracker and corresponding gui components
     public GUI() {
@@ -30,6 +30,7 @@ public class GUI extends JFrame {
 
         initializeTopMenu();
         initializeTable();
+        addWindowListener(new SaveOnClose());
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreOnScreen();
@@ -58,7 +59,7 @@ public class GUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: adds actions as a dropdown to the top of the window
     private void initializeTopMenu() {
-        TopMenu topMenu = new TopMenu(this);
+        topMenu = new TopMenu(this);
         setJMenuBar(topMenu);
     }
 
@@ -99,5 +100,15 @@ public class GUI extends JFrame {
 
     public EntertainmentTracker getTracker() {
         return tracker;
+    }
+
+
+    // MODIFIES: JSON file (archive.save)
+    // EFFECTS: saves all current archive data to file
+    // CITATION: idea from : https://stackoverflow.com/questions/15198549/popup-for-jframe-close-button
+    private class SaveOnClose extends WindowAdapter {
+        public void windowClosing(WindowEvent we) {
+            TopMenu.save.doClick();
+        }
     }
 }
