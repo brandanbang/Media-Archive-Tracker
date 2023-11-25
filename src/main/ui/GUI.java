@@ -78,23 +78,19 @@ public class GUI extends JFrame {
     void refreshTable() {
         this.tableModel.setRowCount(0);
         for (Media m : tracker.archive.getDisplayEntries()) {
-            String media = m.toString();
-            String[] parts = media.split("\n");
 
-            String title = parts[1];
-            String type = parts[2];
-            String tags = parts[3];
-            String rating = parts[4];
-            String progress = parts[5];
-            String end = parts[6];
-            String progressPercent = parts[7];
+            String title = m.getTitle();
+            String type = String.valueOf(getType());
+            String tags = m.getTags().toString();
+            String rating = m.getRating();
+            String progress = String.valueOf(m.getProgress());
+            String end = String.valueOf(m.getEnd());
+            String progressPercent = String.valueOf(m.checkProgress());
+
 
             Object[] data = {title, type, rating, progressPercent, progress, end,
                     tags};
             this.tableModel.addRow(data);
-
-            //todo: change implementation of to String method in MEDIA to not have the label with it
-            //      OR add getters that also access the helper methods in the tostring method
         }
     }
 
