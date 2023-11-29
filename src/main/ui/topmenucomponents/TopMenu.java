@@ -17,7 +17,7 @@ public class TopMenu extends JMenuBar {
     private JMenuItem sort;
     private JMenuItem reset;
 
-    // EFFECTS: creates the top menu for the tracker with persistence and viewing actions
+
     public TopMenu(EntertainmentTrackerUI entertainmentTrackerUI) {
         super();
         this.entertainmentTrackerUI = entertainmentTrackerUI;
