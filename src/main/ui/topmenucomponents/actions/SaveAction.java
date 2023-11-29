@@ -1,4 +1,6 @@
-package ui;
+package ui.topmenucomponents.actions;
+
+import ui.EntertainmentTrackerUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,12 +13,12 @@ import java.io.IOException;
 public class SaveAction extends AbstractAction {
 
     private Icon icon;
-    private GUI gui;
+    private EntertainmentTrackerUI entertainmentTrackerUI;
 
     // EFFECTS: initializes the save action
-    public SaveAction(GUI gui) {
+    public SaveAction(EntertainmentTrackerUI entertainmentTrackerUI) {
         super("Save");
-        this.gui = gui;
+        this.entertainmentTrackerUI = entertainmentTrackerUI;
         try {
             Image image = ImageIO.read(new File("./images/save icon.jpg"));
             icon = new ImageIcon(image);
@@ -40,10 +42,7 @@ public class SaveAction extends AbstractAction {
                 null,
                 null);
         if (option == JOptionPane.YES_OPTION) {
-            this.gui.getTracker().save();
-            System.out.println("saved data");
-        } else {
-            System.out.println("data NOT saved");
+            this.entertainmentTrackerUI.save();
         }
     }
 }

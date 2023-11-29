@@ -202,9 +202,9 @@ public class MediaTest {
     }
 
     private String stringBuilderHelperNoRating() {
-        return "\nname: " + m1.title + "\ntype: " + m1.type + "\ntags: " +
+        return "\nname: " + m1.getTitle() + "\ntype: " + m1.getType() + "\ntags: " +
                 "a1, a2, a3, " + "\nrating: " + "no rating" + "\nprogress: " +
-                m1.progress + "\nend: " + m1.end + "\nprogress percent: " +
+                m1.getProgress() + "\nend: " + m1.getEnd() + "\nprogress percent: " +
                 m1.checkProgress();
     }
 
@@ -279,9 +279,9 @@ public class MediaTest {
     }
 
     private String stringBuilderHelperRating() {
-        return "\nname: " + m1.title + "\ntype: " + m1.type + "\ntags: " +
+        return "\nname: " + m1.getTitle() + "\ntype: " + m1.getType() + "\ntags: " +
                 "a1, a2, a3, " + "\nrating: " + 2f + "\nprogress: " +
-                m1.progress + "\nend: " + m1.end + "\nprogress percent: " +
+                m1.getProgress() + "\nend: " + m1.getEnd() + "\nprogress percent: " +
                 m1.checkProgress();
     }
 

@@ -22,12 +22,20 @@ public class Archive implements MakeJsonType {
     }
 
     // EFFECTS: returns the all media that is a given tag
+    public void resetFilters() {
+        EventLog.getInstance().logEvent(new Event("Filters reset"));
+        this.displayEntries = filter(false, "");
+    }
+
+    // EFFECTS: returns the all media that is a given tag
     public void whitelistTag(String tag) {
+        EventLog.getInstance().logEvent(new Event("Whitelisted for " + tag));
         this.displayEntries = filter(true, tag);
     }
 
     // EFFECTS: returns the all media that is NOT a given tag
     public void blacklistTag(String tag) {
+        EventLog.getInstance().logEvent(new Event("Blacklisted for " + tag));
         this.displayEntries = filter(false, tag);
     }
 
@@ -53,38 +61,44 @@ public class Archive implements MakeJsonType {
 
     // EFFECTS: returns the list of media sorted by progress percentage ascended
     public void sortProgressAscending() {
+        EventLog.getInstance().logEvent(new Event("Sorted by Progress Percent - Ascending"));
         this.displayEntries = sort(true, PROGRESS);
     }
 
     // EFFECTS: returns the list of media sorted by progress percentage descended
     public void sortProgressDescending() {
+        EventLog.getInstance().logEvent(new Event("Sorted by Progress Percent - Descending"));
         this.displayEntries = sort(false, PROGRESS);
     }
 
     // EFFECTS: returns the list of media sorted by rating ascended
     public void sortRatingAscending() {
+        EventLog.getInstance().logEvent(new Event("Sorted by Rating - Ascending"));
         this.displayEntries = sort(true, RATING);
     }
 
     // EFFECTS: returns the list of media sorted by rating descended
     public void sortRatingDescending() {
+        EventLog.getInstance().logEvent(new Event("Sorted by Rating - Descending"));
         this.displayEntries = sort(false, RATING);
     }
 
     // EFFECTS: returns the list of media sorted by rating ascended
     public void sortTitleAscending() {
+        EventLog.getInstance().logEvent(new Event("Sorted by Title - Ascending"));
         this.displayEntries = sort(true, TITLE);
     }
 
     // EFFECTS: returns the list of media sorted by rating descended
     public void sortTitleDescending() {
+        EventLog.getInstance().logEvent(new Event("Sorted by Title - Descending"));
         this.displayEntries = sort(false, TITLE);
     }
 
     // REQUIRES: sort type modifier must be an existing category
     // EFFECTS: sorts and returns a sorted list based off modifier
     private List<Media> sort(boolean ascending, SortType type) {
-        List<Media> sortedSet = new ArrayList<>(entries);
+        List<Media> sortedSet = new ArrayList<>(this.displayEntries);
         if (type == PROGRESS) {
             sortedSet.sort(Comparator.comparing(Media::checkProgress));
         }
@@ -103,12 +117,16 @@ public class Archive implements MakeJsonType {
     // MODIFIES: this
     // EFFECTS: adds given tag to set of tags, if tag already exists, do nothing
     public void addTag(String tag) {
+        EventLog.getInstance().logEvent(new Event("Tag: " + tag + " added"));
         this.tags.add(tag);
     }
 
     // MODIFIES: this
     // EFFECTS: adds given entry to archive
     public void addEntry(Media entry) {
+        EventLog.getInstance().logEvent(new Event("Added " + entry.getType() + " Entry: "
+                + entry.getTitle()
+                + " with end marker " + entry.getEnd()));
         this.entries.add(entry);
         this.displayEntries.add(entry);
     }
@@ -121,6 +139,7 @@ public class Archive implements MakeJsonType {
             if (m.equals(entry)) {
                 entries.remove(m);
                 displayEntries.remove(m);
+                EventLog.getInstance().logEvent(new Event("Removed Entry: " + entry.getTitle()));
                 return true;
             }
         }

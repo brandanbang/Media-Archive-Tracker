@@ -1,4 +1,4 @@
-package ui;
+package ui.tablecomponents;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

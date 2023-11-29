@@ -1,6 +1,7 @@
-package ui;
+package ui.topmenucomponents.actions;
 
 import model.Archive;
+import ui.EntertainmentTrackerUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,13 +15,13 @@ import java.io.IOException;
 public class ResetViewAction extends AbstractAction implements ActionListener {
 
     private Icon icon;
-    private GUI gui;
+    private EntertainmentTrackerUI entertainmentTrackerUI;
 
 
     // EFFECTS: initializes the filter action
-    public ResetViewAction(GUI gui) {
+    public ResetViewAction(EntertainmentTrackerUI entertainmentTrackerUI) {
         super("Reset");
-        this.gui = gui;
+        this.entertainmentTrackerUI = entertainmentTrackerUI;
 
         try {
             Image image = ImageIO.read(new File("./images/reset icon.jpg"));
@@ -34,7 +35,7 @@ public class ResetViewAction extends AbstractAction implements ActionListener {
     // EFFECTS: creates a popup for user to select and confirm the filter
     @Override
     public void actionPerformed(ActionEvent e) {
-        Archive archive = gui.getTracker().archive;
+        Archive archive = entertainmentTrackerUI.getArchive();
 
         int option = JOptionPane.showOptionDialog(
                 null,
@@ -46,8 +47,8 @@ public class ResetViewAction extends AbstractAction implements ActionListener {
                 null,
                 null);
         if (option == JOptionPane.YES_OPTION) {
-            archive.blacklistTag("");
-            gui.refreshTable();
+            archive.resetFilters();
+            entertainmentTrackerUI.refreshTable();
         }
     }
 }

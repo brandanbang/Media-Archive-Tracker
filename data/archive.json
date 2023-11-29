@@ -3,49 +3,19 @@
         {
             "rating": -1,
             "progress": 0,
-            "end": 10,
-            "title": "test",
-            "type": "BOOK",
-            "tags": []
-        },
-        {
-            "rating": 2,
-            "progress": 0,
-            "end": 123123,
-            "title": "asdasd",
-            "type": "SERIES",
-            "tags": ["asdasd"]
-        },
-        {
-            "rating": -1,
-            "progress": 0,
-            "end": 23452345,
-            "title": "123123123",
-            "type": "MOVIE",
-            "tags": []
-        },
-        {
-            "rating": -1,
-            "progress": 0,
             "end": 1,
-            "title": "21",
-            "type": "SERIES",
-            "tags": []
+            "title": "Kung Fu Panda",
+            "type": "MOVIE",
+            "tags": ["cool"]
         },
         {
-            "rating": -1,
-            "progress": 0,
-            "end": 123,
-            "title": "testing",
-            "type": "MOVIE",
-            "tags": []
+            "rating": 9.2,
+            "progress": 17,
+            "end": 65,
+            "title": "Pokemon",
+            "type": "SERIES",
+            "tags": ["cool"]
         }
     ],
-    "tags": [
-        "a",
-        "b",
-        "c",
-        "asdasd",
-        "dasdasd"
-    ]
+    "tags": ["cool"]
 }

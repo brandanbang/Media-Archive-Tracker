@@ -1,6 +1,7 @@
-package ui;
+package ui.tablecomponents.actions;
 
 import model.Archive;
+import ui.EntertainmentTrackerUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +10,8 @@ import java.awt.*;
 public class DeleteAction extends TableActions {
 
     // EFFECTS: manages the delete popup
-    public DeleteAction(GUI gui, int selectedRow) {
-        super(gui, selectedRow, "Delete Entry", "./images/delete icon.jpg");
+    public DeleteAction(EntertainmentTrackerUI entertainmentTrackerUI, int selectedRow) {
+        super(entertainmentTrackerUI, selectedRow, "Delete Entry", "./images/delete icon.jpg");
     }
 
     // MODIFIES: this
@@ -26,7 +27,7 @@ public class DeleteAction extends TableActions {
     // EFFECTS: deletes the selected archive
     @Override
     void mediaAction() {
-        Archive archive = gui.getTracker().archive;
+        Archive archive = entertainmentTrackerUI.getArchive();
         archive.delEntry(selectedMedia);
     }
 

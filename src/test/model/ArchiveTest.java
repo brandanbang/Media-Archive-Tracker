@@ -92,6 +92,19 @@ class ArchiveTest {
     }
 
     @Test
+    void testResetFilters() {
+        a1.blacklistTag("thriller");
+        assertTrue(a1.getDisplayEntries().contains(m2));
+        assertEquals(1, a1.getDisplayEntries().size());
+
+        a1.resetFilters();
+        assertTrue(a1.getDisplayEntries().contains(m0));
+        assertTrue(a1.getDisplayEntries().contains(m1));
+        assertTrue(a1.getDisplayEntries().contains(m2));
+        assertEquals(3, a1.getDisplayEntries().size());
+    }
+
+    @Test
     void testSortProgressAsc() {
         a1.sortProgressAscending();
         assertEquals(m2, a1.getDisplayEntries().get(0));

@@ -1,9 +1,11 @@
-package ui;
+package ui.tablecomponents.actions;
 
 import exceptions.InvalidSelection;
 import model.Archive;
 import model.Media;
 import model.MediaType;
+import ui.ErrorPopup;
+import ui.EntertainmentTrackerUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +20,8 @@ public class AddAction extends TableActions {
     private JTextField endMarkerEntry;
 
     // EFFECTS: manages the popup to add action
-    public AddAction(GUI gui, int selectedRow) {
-        super(gui, -1, "Add Entry", "./images/add icon.jpg");
+    public AddAction(EntertainmentTrackerUI entertainmentTrackerUI, int selectedRow) {
+        super(entertainmentTrackerUI, -1, "Add Entry", "./images/add icon.jpg");
     }
 
     // MODIFIES: this
@@ -44,7 +46,7 @@ public class AddAction extends TableActions {
     @Override
     void mediaAction() {
         try {
-            Archive archive = gui.getTracker().archive;
+            Archive archive = entertainmentTrackerUI.getArchive();
             String title = titleEntry.getText();
             MediaType type = MediaType.valueOf((String) typeOptions.getSelectedItem());
             int end = Integer.parseInt(endMarkerEntry.getText());
@@ -59,9 +61,9 @@ public class AddAction extends TableActions {
 
             archive.addEntry(newEntry);
         } catch (InvalidSelection is) {
-            new EntryErrorPopup(gui, is.getMessage());
+            new ErrorPopup(entertainmentTrackerUI, is.getMessage());
         } catch (NumberFormatException nfe) {
-            new EntryErrorPopup(gui, "End marker not an integer");
+            new ErrorPopup(entertainmentTrackerUI, "End marker not an integer");
         }
     }
 }

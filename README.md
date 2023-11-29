@@ -63,3 +63,36 @@ friends!
     - Select 'File' located in the top left corner
     - Select 'Load'
     - Confirm the save with 'YES' button 
+
+
+# Phase 4: Task 2
+Tue Nov 28 21:19:08 PST 2023  
+Added MOVIE Entry: Kung Fu Panda with end marker 1
+
+Tue Nov 28 21:19:20 PST 2023  
+Added SERIES Entry: Pokemon with end marker 65
+
+Tue Nov 28 21:19:42 PST 2023  
+Pokemon's progress updated to 17
+
+Tue Nov 28 21:19:42 PST 2023  
+Pokemon's end marker updated to 65
+
+Tue Nov 28 21:19:42 PST 2023  
+Pokemon's rating updated to 9.2
+
+Tue Nov 28 21:19:59 PST 2023  
+Tag: cool added
+
+Tue Nov 28 21:19:59 PST 2023  
+Added tag: cool to Pokemon
+
+Tue Nov 28 21:20:12 PST 2023  
+Added tag: cool to Kung Fu Panda
+
+Tue Nov 28 21:20:16 PST 2023  
+Whitelisted for cool
+
+Tue Nov 28 21:20:24 PST 2023  
+Sorted by Progress Percent - Ascending
+

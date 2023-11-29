@@ -3,12 +3,12 @@ package ui;
 import javax.swing.*;
 
 // represents the skeleton of the error popups
-public class EntryErrorPopup {
+public class ErrorPopup {
 
     // EFFECTS: creates the error popup explaining the issue
-    public EntryErrorPopup(GUI gui, String message) {
+    public ErrorPopup(EntertainmentTrackerUI entertainmentTrackerUI, String message) {
         JOptionPane.showOptionDialog(
-                gui,
+                entertainmentTrackerUI,
                 message,
                 "Error",
                 JOptionPane.DEFAULT_OPTION,

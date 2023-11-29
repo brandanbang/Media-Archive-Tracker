@@ -1,4 +1,6 @@
-package ui;
+package ui.tablecomponents.actions;
+
+import ui.EntertainmentTrackerUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +17,8 @@ public class TagAction extends TableActions {
     private JTextField tagEntry;
 
     // manages the action of adding a tag from an entry
-    public TagAction(GUI gui, int selectedRow) {
-        super(gui, selectedRow, "Tag", "./images/tag icon.png");
+    public TagAction(EntertainmentTrackerUI entertainmentTrackerUI, int selectedRow) {
+        super(entertainmentTrackerUI, selectedRow, "Tag", "./images/tag icon.png");
     }
 
     // MODIFIES: this
@@ -41,11 +43,10 @@ public class TagAction extends TableActions {
     // MODIFIES: this;
     // EFFECTS: shows all existing tags in archive
     private void tagOptions() {
-        Set<String> tagSet = gui.getTracker().archive.getTags();
+        Set<String> tagSet = entertainmentTrackerUI.getArchive().getTags();
 
         allTagsModel = new DefaultListModel<>();
         allTagsModel.addAll(tagSet);
-        System.out.println(allTagsModel);
 
         allTags = new JList<>(allTagsModel);
         allTags.setSelectionMode(SINGLE_SELECTION);

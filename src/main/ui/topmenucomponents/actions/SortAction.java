@@ -1,6 +1,7 @@
-package ui;
+package ui.topmenucomponents.actions;
 
 import model.Archive;
+import ui.EntertainmentTrackerUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,16 +15,16 @@ import java.io.IOException;
 public class SortAction extends AbstractAction implements ActionListener {
 
     private Icon icon;
-    private GUI gui;
+    private EntertainmentTrackerUI entertainmentTrackerUI;
     private JPanel mediaPanel;
     private JComboBox<String> sortTypeSelector;
     private JComboBox<String> sortOrderSelector;
 
 
     // EFFECTS: initializes the sort action
-    public SortAction(GUI gui) {
+    public SortAction(EntertainmentTrackerUI entertainmentTrackerUI) {
         super("Sort");
-        this.gui = gui;
+        this.entertainmentTrackerUI = entertainmentTrackerUI;
         this.mediaPanel = new JPanel();
 
         try {
@@ -38,6 +39,7 @@ public class SortAction extends AbstractAction implements ActionListener {
     // MODIFIES: this, archive
     // EFFECTS: initializes the field components for the popup
     private void initializeComponents() {
+        mediaPanel.removeAll();
         mediaPanel.setLayout(new GridLayout(0, 3));
 
         String[] sortOrder = {"Ascending", "Descending"};
@@ -66,14 +68,14 @@ public class SortAction extends AbstractAction implements ActionListener {
                 icon);
         if (option == JOptionPane.OK_OPTION) {
             sortOptions();
-            gui.refreshTable();
+            entertainmentTrackerUI.refreshTable();
         }
     }
 
     // MODIFIES: archive
     // EFFECTS: sorts the archive based on selected instructions
     private void sortOptions() {
-        Archive archive = gui.getTracker().archive;
+        Archive archive = entertainmentTrackerUI.getArchive();
         String order = String.valueOf(sortOrderSelector.getSelectedItem());
         String type = String.valueOf(sortTypeSelector.getSelectedItem());
         if (order.equals("Ascending")) {

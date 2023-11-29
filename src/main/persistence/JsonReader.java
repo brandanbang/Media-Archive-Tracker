@@ -76,10 +76,10 @@ public class JsonReader {
 
         try {
             Media media = new Media(title, end, archive, type);
+            archive.addEntry(media);
             media.updateRating(rating);
             addTags(media, jsonObject);
             media.updateProgress(progress);
-            archive.addEntry(media);
         } catch (InvalidSelection is) {
             throw new InvalidSave();
         }

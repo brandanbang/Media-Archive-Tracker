@@ -1,6 +1,7 @@
-package ui;
+package ui.topmenucomponents.actions;
 
 import model.Archive;
+import ui.EntertainmentTrackerUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,23 +17,23 @@ import java.util.Set;
 public class FilterAction extends AbstractAction implements ActionListener {
 
     private Icon icon;
-    private GUI gui;
+    private EntertainmentTrackerUI entertainmentTrackerUI;
     private JPanel mediaPanel;
     private JComboBox<String> filterTypeSelector;
     private JComboBox<String> tagSelector;
 
 
     // EFFECTS: initializes the filter action
-    public FilterAction(GUI gui) {
+    public FilterAction(EntertainmentTrackerUI entertainmentTrackerUI) {
         super("Filter");
-        this.gui = gui;
+        this.entertainmentTrackerUI = entertainmentTrackerUI;
         this.mediaPanel = new JPanel();
 
         try {
             Image image = ImageIO.read(new File("./images/filter icon.png"));
             icon = new ImageIcon(image);
         } catch (IOException e) {
-            System.out.println("Filter Icon not found");
+            System.out.println("Warning: Filter Icon not found");
         }
     }
 
@@ -43,7 +44,7 @@ public class FilterAction extends AbstractAction implements ActionListener {
         mediaPanel.removeAll();
         mediaPanel.setLayout(new GridLayout(0, 3));
 
-        Set<String> tagSet = gui.getTracker().archive.getTags();
+        Set<String> tagSet = entertainmentTrackerUI.getArchive().getTags();
 
         String[] tags = tagSet.toArray(new String[0]);
 
@@ -62,7 +63,7 @@ public class FilterAction extends AbstractAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         initializeComponents();
-        Archive archive = gui.getTracker().archive;
+        Archive archive = entertainmentTrackerUI.getArchive();
 
         int option = JOptionPane.showConfirmDialog(
                 null,
@@ -80,8 +81,7 @@ public class FilterAction extends AbstractAction implements ActionListener {
             } else {
                 archive.blacklistTag(tag);
             }
-            gui.refreshTable();
-            System.out.println("filtered");
+            entertainmentTrackerUI.refreshTable();
         }
     }
 }

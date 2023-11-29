@@ -1,28 +1,41 @@
 package ui;
 
+import exceptions.InvalidSave;
+import model.Archive;
+import model.Event;
+import model.EventLog;
 import model.Media;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import ui.tablecomponents.Table;
+import ui.tablecomponents.TableManagerPopUp;
+import ui.tablecomponents.TableModel;
+import ui.topmenucomponents.TopMenu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 
 // class that manages the GUI app
-public class GUI extends JFrame {
+public class EntertainmentTrackerUI extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
-    private EntertainmentTracker tracker;
-    private JPanel jpanel;
-    private Table table;
+    private static final String JSON_STORE = "./data/archive.json";
+    private Archive archive;
+    private JsonWriter writer;
+    private JsonReader reader;
+
     private TableModel tableModel;
-    private TableManagerPopUp tableManagerPopUp;
-    private TopMenu topMenu;
 
     // EFFECTS: creates the entertainment tracker and corresponding gui components
-    public GUI() {
-        this.tracker = new EntertainmentTracker();
+    public EntertainmentTrackerUI() {
+        archive = new Archive();
+        writer = new JsonWriter(JSON_STORE);
+        reader = new JsonReader(JSON_STORE);
 
-        this.jpanel = new JPanel();
-        this.jpanel.addMouseListener(new DesktopFocusAction());
+        JPanel jpanel = new JPanel();
+        jpanel.addMouseListener(new DesktopFocusAction());
         setContentPane(jpanel);
         setTitle("Entertainment Tracker");
         setLayout(new BorderLayout());
@@ -43,7 +56,7 @@ public class GUI extends JFrame {
         // EFFECTS: sets the window focus to the mouse event
         @Override
         public void mouseClicked(MouseEvent e) {
-            GUI.this.requestFocusInWindow();
+            EntertainmentTrackerUI.this.requestFocusInWindow();
         }
     }
 
@@ -59,7 +72,7 @@ public class GUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: adds actions as a dropdown to the top of the window
     private void initializeTopMenu() {
-        topMenu = new TopMenu(this);
+        TopMenu topMenu = new TopMenu(this);
         setJMenuBar(topMenu);
     }
 
@@ -67,17 +80,17 @@ public class GUI extends JFrame {
     // EFFECTS: sets up the table display for archive
     private void initializeTable() {
         tableModel = new TableModel();
-        table = new Table(tableModel);
-        tableManagerPopUp = new TableManagerPopUp(this, table);
+        Table table = new Table(tableModel);
+        TableManagerPopUp tableManagerPopUp = new TableManagerPopUp(this, table);
         JScrollPane tableScrollPane = new JScrollPane(table);
         this.add(tableScrollPane, BorderLayout.CENTER);
     }
 
     // MODIFIES: this
     // EFFECTS: loads info from archive to ui table
-    void refreshTable() {
+    public void refreshTable() {
         this.tableModel.setRowCount(0);
-        for (Media m : tracker.archive.getDisplayEntries()) {
+        for (Media m : archive.getDisplayEntries()) {
 
             String title = m.getTitle();
             String type = String.valueOf(getType());
@@ -94,17 +107,46 @@ public class GUI extends JFrame {
         }
     }
 
-    public EntertainmentTracker getTracker() {
-        return tracker;
+    // EFFECTS: saves archive to file
+    public void save() {
+        try {
+            writer.open();
+            writer.write(archive);
+            writer.close();
+        } catch (FileNotFoundException e) {
+            new ErrorPopup(this, "Unable to save... check indicated file location");
+        }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads archive from file
+    public void load() {
+        try {
+            archive = reader.read();
+        } catch (InvalidSave is) {
+            new ErrorPopup(this, "Unable to read... "
+                    + "\ncheck indicated file location and content info");
+        }
+    }
 
     // MODIFIES: JSON file (archive.save)
     // EFFECTS: saves all current archive data to file
     // CITATION: idea from : https://stackoverflow.com/questions/15198549/popup-for-jframe-close-button
     private class SaveOnClose extends WindowAdapter {
         public void windowClosing(WindowEvent we) {
-            TopMenu.save.doClick();
+            TopMenu.getSave().doClick();
+            printLog();
+        }
+    }
+
+    public Archive getArchive() {
+        return archive;
+    }
+
+    // EFFECTS: prints event log of archive to console/terminal
+    private void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println("\n" + e.toString());
         }
     }
 }

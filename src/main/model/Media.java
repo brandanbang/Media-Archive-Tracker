@@ -9,13 +9,13 @@ import java.util.*;
 
 // abstract class for various types of media
 public class Media implements MakeJsonType {
-    protected String title;
-    protected Set<String> tags;
-    protected float rating;
-    protected int progress;
-    protected int end;
-    protected Archive archive;
-    protected MediaType type;
+    private String title;
+    private Set<String> tags;
+    private float rating;
+    private int progress;
+    private int end;
+    private Archive archive;
+    private MediaType type;
 
     // REQUIRES: already existing archive to hold media entry
     // EFFECTS: if end marker <= 0, throw InvalidSelection
@@ -48,6 +48,7 @@ public class Media implements MakeJsonType {
             throw new InvalidSelection("Progress cannot exceed the end marker.");
         } else {
             this.progress = progress;
+            EventLog.getInstance().logEvent(new Event(this.title + "'s progress updated to " + progress));
         }
     }
 
@@ -59,6 +60,7 @@ public class Media implements MakeJsonType {
             throw new InvalidSelection("Given Rating is outside the acceptable range [0, 10]");
         }
         this.rating = rating;
+        EventLog.getInstance().logEvent(new Event(this.title + "'s rating updated to " + rating));
     }
 
     // MODIFIES: this
@@ -70,6 +72,7 @@ public class Media implements MakeJsonType {
         }
 
         this.end = end;
+        EventLog.getInstance().logEvent(new Event(this.title + "'s end marker updated to " + end));
     }
 
     // MODIFIES: this, archive
@@ -82,6 +85,7 @@ public class Media implements MakeJsonType {
             archive.addTag(tag);
         }
         this.tags.add(tag);
+        EventLog.getInstance().logEvent(new Event("Added tag: " + tag + " to " + this.title));
     }
 
     // MODIFIES: this
@@ -92,6 +96,7 @@ public class Media implements MakeJsonType {
             throw new TagDoesNotExist();
         }
         this.tags.remove(tag);
+        EventLog.getInstance().logEvent(new Event("Removed tag: " + tag + " from " + this.title));
     }
 
     public String getTitle() {

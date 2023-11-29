@@ -1,4 +1,6 @@
-package ui;
+package ui.topmenucomponents.actions;
+
+import ui.EntertainmentTrackerUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,12 +13,12 @@ import java.io.IOException;
 public class LoadAction extends AbstractAction {
 
     private Icon icon;
-    private GUI gui;
+    private EntertainmentTrackerUI entertainmentTrackerUI;
 
     // EFFECTS: initializes the load action
-    public LoadAction(GUI gui) {
+    public LoadAction(EntertainmentTrackerUI entertainmentTrackerUI) {
         super("Load");
-        this.gui = gui;
+        this.entertainmentTrackerUI = entertainmentTrackerUI;
         try {
             Image image = ImageIO.read(new File("./images/load icon.jpg"));
             icon = new ImageIcon(image);
@@ -40,11 +42,8 @@ public class LoadAction extends AbstractAction {
                 null,
                 null);
         if (option == JOptionPane.YES_OPTION) {
-            this.gui.getTracker().load();
-            this.gui.refreshTable();
-            System.out.println("data loaded");
-        } else {
-            System.out.println("data no loaded");
+            this.entertainmentTrackerUI.load();
+            this.entertainmentTrackerUI.refreshTable();
         }
     }
 }

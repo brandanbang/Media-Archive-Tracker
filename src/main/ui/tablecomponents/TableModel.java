@@ -1,10 +1,10 @@
-package ui;
+package ui.tablecomponents;
 
 import javax.swing.table.DefaultTableModel;
 
 // represents the model that stores the information for the archive for a table
 public class TableModel extends DefaultTableModel {
-    private static String[] HEADER = {"Title", "Type", "Rating", "Progress %", "Progress", "End", "tags"};
+    private static final String[] HEADER = {"Title", "Type", "Rating", "Progress %", "Progress", "End", "tags"};
 
     // EFFECTS: constructs a table with the header
     public TableModel() {

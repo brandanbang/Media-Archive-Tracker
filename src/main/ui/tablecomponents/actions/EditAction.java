@@ -1,6 +1,8 @@
-package ui;
+package ui.tablecomponents.actions;
 
 import exceptions.InvalidSelection;
+import ui.ErrorPopup;
+import ui.EntertainmentTrackerUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +17,8 @@ public class EditAction extends TableActions {
     private JTextField progressEntry;
 
     // EFFECTS: manages the popup to edit action
-    public EditAction(GUI gui, int selectedRow) {
-        super(gui, selectedRow, "Edit Entry", "./images/edit icon.jpg");
+    public EditAction(EntertainmentTrackerUI entertainmentTrackerUI, int selectedRow) {
+        super(entertainmentTrackerUI, selectedRow, "Edit Entry", "./images/edit icon.jpg");
     }
 
     // MODIFIES: this
@@ -62,9 +64,9 @@ public class EditAction extends TableActions {
             selectedMedia.updateRating(rating);
 
         } catch (InvalidSelection is) {
-            new EntryErrorPopup(gui, is.getMessage());
+            new ErrorPopup(entertainmentTrackerUI, is.getMessage());
         } catch (NumberFormatException nfe) {
-            new EntryErrorPopup(gui, "End marker not an integer");
+            new ErrorPopup(entertainmentTrackerUI, "End marker not an integer");
         }
     }
 }

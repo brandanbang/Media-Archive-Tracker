@@ -1,6 +1,7 @@
-package ui;
+package ui.tablecomponents.actions;
 
 import model.Media;
+import ui.EntertainmentTrackerUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,17 +12,17 @@ import java.io.IOException;
 // represents the abstract class associated with the table
 public abstract class TableActions {
 
-    protected GUI gui;
+    protected EntertainmentTrackerUI entertainmentTrackerUI;
     protected Icon icon;
     protected JPanel mediaPanel;
     protected Media selectedMedia;
 
     // EFFECTS: manages the popup and action
-    public TableActions(GUI gui,int selectedRow, String action, String pathName) {
-        this.gui = gui;
+    public TableActions(EntertainmentTrackerUI ui, int selectedRow, String action, String pathName) {
+        this.entertainmentTrackerUI = ui;
         this.mediaPanel = new JPanel();
         if (selectedRow >= 0) {
-            this.selectedMedia = gui.getTracker().archive.getDisplayEntries().get(selectedRow);
+            this.selectedMedia = entertainmentTrackerUI.getArchive().getDisplayEntries().get(selectedRow);
         }
 
         initializeIcon(pathName);
@@ -36,7 +37,7 @@ public abstract class TableActions {
             Image image = ImageIO.read(new File(pathName));
             icon = new ImageIcon(image);
         } catch (IOException e) {
-            System.out.println("Icon not found");
+            System.out.println("Warning: Icon not found");
         }
     }
 

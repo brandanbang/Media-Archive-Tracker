@@ -1,23 +1,26 @@
-package ui;
+package ui.topmenucomponents;
+
+import ui.EntertainmentTrackerUI;
+import ui.topmenucomponents.actions.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 // represents the top bar and its associated actions
 public class TopMenu extends JMenuBar {
-    private GUI gui;
-    JMenu persistenceMenu;
-    static JMenuItem save;
-    JMenuItem load;
-    JMenu viewMenu;
-    JMenuItem filter;
-    JMenuItem sort;
-    JMenuItem reset;
+    private EntertainmentTrackerUI entertainmentTrackerUI;
+    private JMenu persistenceMenu;
+    private static JMenuItem save;
+    private JMenuItem load;
+    private JMenu viewMenu;
+    private JMenuItem filter;
+    private JMenuItem sort;
+    private JMenuItem reset;
 
 
-    public TopMenu(GUI gui) {
+    public TopMenu(EntertainmentTrackerUI entertainmentTrackerUI) {
         super();
-        this.gui = gui;
+        this.entertainmentTrackerUI = entertainmentTrackerUI;
         persistenceOptions();
         viewOptions();
     }
@@ -28,8 +31,8 @@ public class TopMenu extends JMenuBar {
         persistenceMenu = new JMenu("File");
         persistenceMenu.setMnemonic('P');
 
-        save = new JMenuItem(new SaveAction(gui));
-        load = new JMenuItem(new LoadAction(gui));
+        save = new JMenuItem(new SaveAction(entertainmentTrackerUI));
+        load = new JMenuItem(new LoadAction(entertainmentTrackerUI));
 
         save.setAccelerator(KeyStroke.getKeyStroke("control S"));
         load.setAccelerator(KeyStroke.getKeyStroke("control L"));
@@ -45,9 +48,9 @@ public class TopMenu extends JMenuBar {
         viewMenu = new JMenu("View");
         viewMenu.setMnemonic('V');
 
-        filter = new JMenuItem(new FilterAction(gui));
-        sort = new JMenuItem(new SortAction(gui));
-        reset = new JMenuItem(new ResetViewAction(gui));
+        filter = new JMenuItem(new FilterAction(entertainmentTrackerUI));
+        sort = new JMenuItem(new SortAction(entertainmentTrackerUI));
+        reset = new JMenuItem(new ResetViewAction(entertainmentTrackerUI));
 
         filter.setAccelerator(KeyStroke.getKeyStroke("control F"));
         sort.setAccelerator(KeyStroke.getKeyStroke("control O"));
@@ -58,5 +61,9 @@ public class TopMenu extends JMenuBar {
         viewMenu.add(reset);
 
         this.add(viewMenu, BorderLayout.PAGE_START);
+    }
+
+    public static JMenuItem getSave() {
+        return save;
     }
 }
