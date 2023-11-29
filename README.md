@@ -96,3 +96,19 @@ Whitelisted for cool
 Tue Nov 28 21:20:24 PST 2023  
 Sorted by Progress Percent - Ascending
 
+# Phase 4: Task 3
+
+At the end of Phase 3, I noticed I had an unnecessary class, "EntertainmentTracker," in the UI that contained a single 
+archive field and the save() and load() methods. Ideally, this class would be combined with my main UI class and 
+directly create the archive field rather than creating a class that contained just that field. I noticed that this 
+extra class forced me to make unnecessary getter calls to the EntertainmentTracker field and then call the method I 
+really wanted. (Note: I did correct this before I began Task 2 of Phase 4. This can be confirmed via comparing this
+commit to my final Phase 3 commit.)
+
+Another thing I wished I figured out how to do or had more time to do is create an abstract class for the TopMenu 
+Actions or somehow combine the Table actions and the TopMenu Actions into an abstract. I think this would be better
+because they do similar jobs and would reduce code duplication.
+
+Likewise, looking back on my program, many ui classes have fields to the main EntertainmentTrackerUI to only access 
+the Archive field. I could have given these classes an Archive field instead of having them call the getter as an extra 
+step.
