@@ -8,6 +8,7 @@ import java.util.Set;
 
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 
+// manages the action of removing a tag from an entry
 public class UnTagAction extends TableActions {
 
     private JList<String> allTags;
@@ -16,7 +17,7 @@ public class UnTagAction extends TableActions {
     private DefaultListModel<String> currentTagsModel;
     private JTextField tagEntry;
 
-    // manages the action of removing a tag from an entry
+    // EFFECT: creates and loads parts for the action of removing a tag from an entry
     public UnTagAction(EntertainmentTrackerUI entertainmentTrackerUI, int selectedRow) {
         super(entertainmentTrackerUI, selectedRow, "Tag", "./images/tag icon.png");
     }

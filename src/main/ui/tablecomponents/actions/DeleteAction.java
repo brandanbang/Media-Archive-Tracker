@@ -6,10 +6,10 @@ import ui.EntertainmentTrackerUI;
 import javax.swing.*;
 import java.awt.*;
 
-// represents teh action of deleting entries
+// represents the action of deleting entries
 public class DeleteAction extends TableActions {
 
-    // EFFECTS: manages the delete popup
+    // EFFECTS: manages the delete entry popup
     public DeleteAction(EntertainmentTrackerUI entertainmentTrackerUI, int selectedRow) {
         super(entertainmentTrackerUI, selectedRow, "Delete Entry", "./images/delete icon.jpg");
     }

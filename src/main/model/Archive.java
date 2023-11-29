@@ -178,10 +178,12 @@ public class Archive implements MakeJsonType {
         return jsonArray;
     }
 
+    // EFFECTS: returns an unmodifiable set of the used tags
     public Set<String> getTags() {
         return Collections.unmodifiableSet(this.tags);
     }
 
+    // EFFECTS: returns an unmodifiable list of entries
     public List<Media> getEntries() {
         return Collections.unmodifiableList(this.entries);
     }
